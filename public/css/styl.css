@@ -5,3 +5,710 @@
 .navbar-brand img {
     width: 50px;
 }
+/* Общий стиль для таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    overflow-x: auto; /* Горизонтальная прокрутка */
+    -webkit-overflow-scrolling: touch; /* Плавная прокрутка для iOS */
+}
+
+/* Стиль для ячеек таблицы */
+th, td {
+    border: 1px solid #ddd; /* Мягкая светлая граница */
+    padding: 10px 15px; /* Удобное расстояние для чтения */
+    text-align: left; /* Текст слева для большей читаемости */
+    font-size: 14px; /* Читаемый размер шрифта */
+    background-color: #fff; /* Белый фон для ячеек */
+}
+
+/* Стиль для заголовков */
+th {
+    background-color: #f5f5f5; /* Светлый фон для заголовков */
+    font-weight: bold; /* Жирный шрифт */
+    color: #333; /* Тёмный цвет текста для заголовков */
+    border-bottom: 2px solid #ddd; /* Толстая граница внизу */
+}
+
+/* Стиль для ячеек */
+td {
+    color: #666; /* Мягкий цвет текста для ячеек */
+}
+
+/* Псевдо-стиль для пустых ячеек, если это необходимо */
+td:empty {
+    background-color: #f9f9f9; /* Легкая подложка для пустых ячеек */
+}
+
+/* Респонсивный дизайн для мобильных устройств */
+@media (max-width: 768px) {
+    table {
+        display: block; /* Делаем таблицу блоком */
+        overflow-x: auto; /* Добавляем горизонтальную прокрутку */
+        -webkit-overflow-scrolling: touch; /* Плавная прокрутка на мобильных устройствах */
+    }
+
+    th, td {
+        padding: 10px 5px; /* Уменьшаем отступы на мобильных устройствах */
+        font-size: 12px; /* Меньший шрифт для мобильных устройств */
+    }
+
+    /* Стили для ползунка прокрутки */
+    table::-webkit-scrollbar {
+        height: 10px; /* Устанавливаем высоту горизонтальной полосы прокрутки */
+    }
+
+    table::-webkit-scrollbar-thumb {
+        background-color: #2f075e; /* Цвет ползунка */
+        border-radius: 6px;
+    }
+
+    table::-webkit-scrollbar-track {
+        background-color: #f1f1f1; /* Цвет фона полосы прокрутки */
+        border-radius: 6px;
+    }
+}
+
+/* Обертка для формы */
+#search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Выравниваем по правому краю */
+    margin-top: 20px;
+}
+
+/* Текст над формой */
+#search-form p {
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center; /* Текст выравнивается по правой стороне */
+}
+/* Поля ввода */
+#search-form input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 250px; /* Можно настроить ширину */
+}
+
+/* Добавим небольшое оформление */
+#search-author {
+    margin-bottom: 5px;
+}
+
+/* Если нужно добавить границу или тень */
+#search-form input:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+/* Стиль для полосы прокрутки */
+table::-webkit-scrollbar {
+    height: 8px; /* Сделаем полосу прокрутки чуть толще */
+}
+
+table::-webkit-scrollbar-thumb {
+    background-color: #7c4dff; /* Цвет ползунка */
+    border-radius: 5px;
+}
+
+table::-webkit-scrollbar-track {
+    background-color: #f5f5f5; /* Светлый фон полосы прокрутки */
+}
+
+/* Мобильная таблица, улучшение */
+@media (max-width: 600px) {
+    table {
+        font-size: 10px; /* Еще меньше шрифт для маленьких экранов */
+    }
+}
+
+/* Кнопка регистрации*/
+.register-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #2f075e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: background 0.3s ease-in-out;
+}
+
+.register-link:hover {
+    background-color: #4f1098;
+}
+
+/* Кнопка входа*/
+.login-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #2f075e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: background 0.3s ease-in-out;
+}
+
+.login-link:hover {
+    background-color: #2f075e;
+}
+
+.about-text {
+    flex: 1;
+    max-width: 50%; /* Занимает половину экрана на больших экранах */
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+    padding: 20px;
+    text-align: justify;
+}
+
+/* Заголовок */
+.about-text h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+/* Параграф */
+.about-text p {
+    font-size: 16px;
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 10px;
+}
+
+/*📱 Адаптация под мобильные экраны*/
+@media (max-width: 900px) {
+    .about-text {
+        max-width: 100%; /* Полная ширина на узких экранах */
+        text-align: left;
+    }
+}
+
+.gallery {
+    flex: 1; /* Занимает 50% ширины */
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.gallery img {
+    width: 30%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.examples-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Расстояние между изображениями */
+    padding: 10px;
+}
+
+.examples-gallery figure {
+    text-align: center;
+    max-width: 300px; /* Максимальная ширина фото */
+}
+
+.examples-gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.examples-gallery figcaption {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.review-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Расстояние между кнопками */
+}
+
+.edit-review, .delete-review {
+    padding: 5px 10px;
+    border: none;
+    background-color: #4CAF50; /* Зеленая для редактирования */
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+}
+
+.edit-review {
+    background-color: #4CAF50;
+}
+
+.delete-review {
+    background-color: #6a2c98; /* Красная для удаления */
+}
+
+.edit-review:hover, .delete-review:hover {
+    opacity: 0.8;
+}
+
+/* Основные стили для таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #1a1a1a; /* Черный фон таблицы */
+    color: #ffffff; /* Белый текст */
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #333; /* Темно-серая граница для строк */
+}
+
+th {
+    background-color: #2f075e; /* Фиолетовый фон для заголовков */
+    color: #d2a9f8; /* Розовый текст для заголовков */
+}
+
+tr:hover {
+    background-color: #333; /* Темно-серый фон при наведении */
+}
+
+/* Стили для мобильных устройств */
+@media screen and (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    th {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        margin-bottom: 10px;
+    }
+
+    td {
+        /* Каждая ячейка таблицы будет вести себя как блок */
+        border: none;
+        border-bottom: 1px solid #333;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        /* Добавляем подписи к данным */
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label); /* Используем атрибут data-label для подписей */
+        color: #2f075e; /* Розовый цвет для подписей */
+    }
+}
+
+
+
+header {
+    background-image: url('../images/vaiicko_logo.png');
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: black;
+    height: 200px;
+
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    font-family: 'Arial', sans-serif;
+}
+
+.auth-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.auth-icon a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.auth-icon svg {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s;
+}
+
+.auth-icon svg:hover {
+    transform: scale(1.1);
+}
+
+
+/* Глобальные стили для всей страницы */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Контентная часть занимает всю доступную высоту */
+.main-content {
+    flex: 1;
+}
+
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 2em;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 0;
+}
+.price-list {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.price-list h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.price-item h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #444;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff4c4c;
+    background-color: #f4f4f4;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+@media (max-width: 600px) {
+    .price-list {
+        padding: 15px;
+    }
+
+    .price-item h3, .price {
+        font-size: 1.3rem;
+    }
+
+    .price-list h2 {
+        font-size: 1.8rem;
+    }
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.reviews {
+    background-color: #f9f9f9;
+    padding: 40px;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+
+.reviews h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.review-item {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+.review-time {
+    text-align: right;
+    font-size: 10px;         /* Уменьшенный размер шрифта */
+    color: #888;              /* Светло-серый цвет */
+    font-style: italic;       /* Курсивный текст */
+    margin-top: 5px;          /* Небольшой отступ сверху */
+}
+.review-item:hover {
+    transform: scale(1.05);
+}
+
+.review-item p {
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.6;
+}
+
+.review-item .review-author {
+    text-align: right;
+    font-size: 1em;
+    font-weight: bold;
+    color: #777;
+    margin-top: 15px;
+}
+.review-item p::before,
+.review-item p::after {
+    content: '"';
+    font-size: 1.5em;
+    color: #ccc;
+    vertical-align: top;
+}
+
+.review-item p::before {
+    margin-right: 5px;
+}
+
+.review-item p::after {
+    margin-left: 5px;
+}
+
+.map-container {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+}
+/* Стили для формы */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+input, select, button {
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+select {
+    appearance: none; /* Убираем стандартный вид выпадающего списка */
+    background-color: white;
+    cursor: pointer;
+}
+
+select:focus, input:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Стили для кнопки */
+button {
+    padding: 10px;
+    background-color: #2f075e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #500c9f;
+}
+
+button:active {
+    background-color: #2f075e;
+}
+
+/* Стили для общего вида */
+input[type="text"], input[type="date"], input[type="time"], select {
+    padding: 8px;
+    font-size: 16px;
+    width: 100%;
+}
+
+
+
+footer {
+    background-image: url('../images/vaiicko_logo.png');
+    background-size: cover; /* Сделает изображение полноэкранным */
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    font-family: 'Arial', sans-serif;
+
+}
+
+footer p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+/*Button Social*/
+/* From Uiverse.io by david-mohseni */
+ul {
+    list-style: none;
+}
+
+.example-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.example-2 .icon-content {
+    margin: 0 10px;
+    position: relative;
+}
+.example-2 .icon-content .tooltip {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+.example-2 .icon-content:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    top: -50px;
+}
+.example-2 .icon-content a {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: #4d4d4d;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+.example-2 .icon-content a:hover {
+    box-shadow: 3px 2px 45px 0 rgb(0 0 0 / 12%);
+}
+.example-2 .icon-content a svg {
+    position: relative;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+}
+.example-2 .icon-content a:hover {
+    color: white;
+}
+.example-2 .icon-content a .filled {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: #000;
+    transition: all 0.3s ease-in-out;
+}
+.example-2 .icon-content a:hover .filled {
+    height: 100%;
+}
+.example-2 .icon-content a[data-social="facebook"] .filled,
+.example-2 .icon-content a[data-social="facebook"] ~ .tooltip {
+    background: #1877f2;
+    color: #fff;
+}
+.example-2 .icon-content a[data-social="instagram"] .filled,
+.example-2 .icon-content a[data-social="instagram"] ~ .tooltip {
+    background: linear-gradient(
+            45deg,
+            #405de6,
+            #5b51db,
+            #b33ab4,
+            #c135b4,
+            #e1306c,
+            #fd1f1f
+    );
+
+}
+.example-2 .icon-content a[data-social="telegram"] .filled,
+.example-2 .icon-content a[data-social="telegram"] ~ .tooltip {
+    background-color: #0088cc;
+}
