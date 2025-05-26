@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Models;
+
+use App\Core\DB\Connection;
+use PDO;
+
+class Review
+{
+    public static function getAll(): array
+    {
+        $stmt = Connection::connect()->prepare("
+            SELECT r.*, u.name AS user_name
+            FROM reviews r
+            JOIN users u ON r.user_id = u.id
+            ORDER BY r.created_at DESC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getById(int $id): ?array
+    {
+        $stmt = Connection::connect()->prepare("SELECT * FROM reviews WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    public static function create(int $user_id, string $content): bool
+    {
+        $stmt = Connection::connect()->prepare("
+            INSERT INTO reviews (user_id, content, created_at) 
+            VALUES (:user_id, :content, NOW())
+        ");
+        return $stmt->execute([
+            'user_id' => $user_id,
+            'content' => $content
+        ]);
+    }
+
+    public static function update(int $id, string $content): bool
+    {
+        $stmt = Connection::connect()->prepare("
+            UPDATE reviews SET content = :content WHERE id = :id
+        ");
+        return $stmt->execute([
+            'id' => $id,
+            'content' => $content
+        ]);
+    }
+}

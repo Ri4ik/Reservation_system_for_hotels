@@ -144,4 +144,13 @@ class Request
 
         return $protocol . '://' . $hostName . $path;
     }
+    public function getMethod(): string
+    {
+        return $this->server['REQUEST_METHOD'] ?? 'GET';
+    }
+
+    public function isPost(): bool
+    {
+        return $this->getMethod() === 'POST';
+    }
 }
