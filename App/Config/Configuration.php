@@ -21,10 +21,10 @@ class Configuration
     /**
      * DB settings
      */
-    public const DB_HOST = 'db';  // see docker/docker-compose.yml
-    public const DB_NAME = 'vaiicko_db'; // see docker/.env
-    public const DB_USER = 'vaiicko_user'; // see docker/.env
-    public const DB_PASS = 'dtb456'; // see docker/.env
+    public const DB_HOST = 'localhost';  // see docker/docker-compose.yml
+    public const DB_NAME = 'booking_rooms'; // see docker/.env
+    public const DB_USER = 'root'; // see docker/.env
+    public const DB_PASS = '1234'; // see docker/.env
 
     /**
      * URL where main page logging is. If action needs login, user will be redirected to this url
