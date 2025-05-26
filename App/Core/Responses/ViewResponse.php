@@ -42,6 +42,12 @@ class ViewResponse extends Response
         $link = $this->app->getLinkGenerator();
 
         ob_start();
+        //rozbalí pole ['rooms' => [...]] do premennej $rooms
+        //bez extrakcie v index.view.php máme prístup iba k $data['rooms'], nie k $rooms
+        if (is_array($data)) {
+            extract($data);
+        }
+
         require "App" . DIRECTORY_SEPARATOR . "Views" . DIRECTORY_SEPARATOR . $this->viewName . ".view.php";
 
         if ($layout != null) {
