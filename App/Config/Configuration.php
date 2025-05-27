@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Config;
-
-use App\Auth\DummyAuthenticator;
+use App\Auth\DatabaseAuthenticator;
 use App\Core\ErrorHandler;
 
 /**
@@ -29,7 +28,7 @@ class Configuration
     /**
      * URL where main page logging is. If action needs login, user will be redirected to this url
      */
-    public const LOGIN_URL = '?c=auth&a=login';
+    public const LOGIN_URL = '?c=Auth&a=login';
     /**
      * Prefix of default view in App/Views dir. <ROOT_LAYOUT>.layout.view.php
      */
@@ -46,7 +45,7 @@ class Configuration
     /**
      * Class used as authenticator. Must implement IAuthenticator
      */
-    public const AUTH_CLASS = DummyAuthenticator::class;
+    public const AUTH_CLASS = DatabaseAuthenticator::class;
     /**
      * Class used as error handler. Must implement IHandleError
      */

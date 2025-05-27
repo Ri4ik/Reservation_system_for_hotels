@@ -11,11 +11,18 @@ class User extends Model
     protected int $id;
     protected string $name;
     protected string $email;
+    protected string $phone;
     protected string $role;
-    protected string $password_hash;
+    protected string $password;
 
     public function getId(): int { return $this->id; }
+    public function getPhone(): string {
+        return $this->phone;
+    }
 
+    public function setPhone(string $phone): void {
+        $this->phone = $phone;
+    }
     public function getName(): string { return $this->name; }
     public function setName(string $name): void { $this->name = $name; }
 
@@ -25,8 +32,8 @@ class User extends Model
     public function getRole(): string { return $this->role; }
     public function setRole(string $role): void { $this->role = $role; }
 
-    public function getPasswordHash(): string { return $this->password_hash; }
-    public function setPasswordHash(string $hash): void { $this->password_hash = $hash; }
+    public function getPasswordHash(): string { return $this->password; }
+    public function setPasswordHash(string $hash): void { $this->password = $hash; }
 
     public static function getTableName(): string
     {
