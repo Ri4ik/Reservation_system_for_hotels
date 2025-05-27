@@ -2,11 +2,13 @@
 /** @var \App\Core\IAuthenticator $auth */
 /** @var \App\Core\LinkGenerator $link */
 ?>
-<nav class="navbar navbar-expand-sm bg-light">
+<header>
     <div class="container-fluid">
-        <a class="navbar-brand" href="<?= $link->url("home.index") ?>">
-            <img src="public/images/vaiicko_logo.png" alt="Logo" title="<?= \App\Config\Configuration::APP_NAME ?>">
-        </a>
+<!--        <a class="navbar-brand" href="--><?php //= $link->url("home.index") ?><!--">-->
+<!--            <img src="public/images/vaiicko_logo.png" alt="Logo" title="--><?php //= \App\Config\Configuration::APP_NAME ?><!--">-->
+<!--        </a>-->
+        <h1>Hotel Forest Paradise</h1>
+    <nav>
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
                 <a class="nav-link" href="<?= $link->url("home.index") ?>">Domov</a>
@@ -24,6 +26,7 @@
                 <a class="nav-link" href="<?= $link->url("review.index") ?>">Recenzie</a>
             </li>
         </ul>
+    </nav>
 
         <?php if ($auth->isLogged()) { ?>
             <span class="navbar-text me-2">Prihlásený: <b><?= $auth->getLoggedUserName() ?></b></span>
@@ -40,4 +43,4 @@
             </ul>
         <?php } ?>
     </div>
-</nav>
+</header>
