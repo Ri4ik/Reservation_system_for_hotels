@@ -49,7 +49,7 @@ class AuthController extends AControllerBase
     public function logout(): Response
     {
         $this->app->getAuth()->logout();
-        return $this->html();
+        return  $this->redirect('?c=auth&a=login');
     }
     public function register(): Response
     {

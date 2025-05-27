@@ -11,7 +11,6 @@
             <p class="validate-error"><?= htmlspecialchars($message) ?></p>
         <?php endif; ?>
         <div id="error-message" class="validate-error" style="display:none;"></div>
-        <div id="error-message" style="color: red;"></div>
 
         <label for="name">Meno:</label>
         <input type="text" name="name" id="name" value="<?= htmlspecialchars($name ?? '') ?>" required>
@@ -26,7 +25,7 @@
         <input type="password" name="password" id="password" required>
 
         <button type="submit">Zaregistrovať sa</button>
-        <p>Máte už účet? <a href="<?= $link->url("Auth.login") ?>">Prihlásiť sa</a></p>
+        <p class="presmerovaci-link">Máte už účet? <a href="<?= $link->url("Auth.login") ?>">Prihlásiť sa</a></p>
     </form>
 </div>
 

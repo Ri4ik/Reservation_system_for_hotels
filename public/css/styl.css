@@ -141,6 +141,25 @@
 #registerForm button:hover {
     background-color: #45a049;
 }
+.presmerovaci-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #f5f5f5;
+    font-weight: 400;
+}
+
+.presmerovaci-link a {
+    color: #7cef7b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.presmerovaci-link a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
 /*forms end*/
 
 /*error message start*/
