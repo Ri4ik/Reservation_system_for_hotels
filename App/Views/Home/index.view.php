@@ -1,30 +1,86 @@
 <div class="container-fluid">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const swiper = new Swiper(".mySwiper", {
+                effect: "coverflow",
+                grabCursor: true,
+                centeredSlides: true,
+                loop: true,
+                // slidesPerView: 3,
+                spaceBetween: 50,
+                coverflowEffect: {
+                    rotate: 0,
+                    stretch: 0,
+                    depth: 150,
+                    modifier: 2.5,
+                    slideShadows: false,
+                },
+                keyboard: {
+                    enabled: true,
+                },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 1.2,
+                    },
+                    480: {
+                        slidesPerView: 1.5,
+                    },
+                    768: {
+                        slidesPerView: 2.3,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 50,
+                    }
+                }
+            });
+        });
+    </script>
+
     <div class="row">
-        <div class="col mt-5">
-            <div class="text-center">
-                <h2>Vaííčko MVC FW</h2>
-                <img src="public/images/vaiicko_logo.png">
-                <p>
-                    Gratulujeme vám, úspešne sa vám podarilo nainštalovať a spustiť framework
-                    <strong>Vaííčko</strong> <?= \App\Config\Configuration::FW_VERSION ?>!<br>
-                    Dúfame, že sa Vám pomocou tohto frameworku vytvoríte nejakú skvelú aplikáciu.<br>
-                </p>
-                <p>
-                    Tento jednoduchý framework bol vytvorený pre lepšie pochopenie architektúry MVC.<br>
-                    Je určený pre študentov predmetu <em>vývoj aplikácií pre internet a intranet</em>, ale nielen im.
-                </p>
-            </div>
+        <div class="col mt-5 text-center">
+            <h2>Vitajte v Hotel Forest Paradise</h2>
+<!--            <img src="public/images/vaiicko_logo.png" alt="Logo hotela" style="max-width: 180px; margin: 20px 0;">-->
+            <p class="lead">
+                Luxus uprostred prírody – oddýchnite si v objatí lesa.
+            </p>
+
+            <p>
+                Hotel Forest Paradise je tichý lesný rezort, ktorý kombinuje pohodlie moderného ubytovania
+                s pokojom nedotknutej prírody. Či už túžite po romantickom víkende, rodinnom pobyte
+                alebo len úniku z mesta, ste na správnom mieste.
+            </p>
         </div>
     </div>
-    <div class="row mt-3">
-        <div class="col text-center">
-            <h4>Autori</h4>
-            <div>
-                <a href="mailto:Patrik.Hrkut@fri.uniza.sk">doc. Ing. Patrik Hrkút, PhD.</a><br>
-                <a href="mailto:Michal.Duracik@fri.uniza.sk">Ing. Michal Ďuračík, PhD.</a><br>
-                <a href="mailto:Matej.Mesko@fri.uniza.sk">Ing. Matej Meško, PhD.</a><br><br>
-                &copy; 2020-<?= date('Y') ?> Žilinská univerzita v Žiline, Fakulta riadenia a informatiky, Katedra
-                softvérových technológií
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-8 text-center">
+            <h2>Galéria hotela</h2>
+            <div class="swiper mySwiper mt-4">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="public/images/rooms.jpg" alt="Lesné chatky">
+                        <p>Chatky uprostred lesa</p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="public/images/rooms2.jpg" alt="Lesné chatky">
+                        <p>Chatky uprostred lesa</p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="public/images/wellness.jpg" alt="Wellness">
+                        <p>Wellness & relax</p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="public/images/wellness2.jpg" alt="Wellness">
+                        <p>Wellness & relax</p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="public/images/tur.jpg" alt="Trasa">
+                        <p>Turistické trasy</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

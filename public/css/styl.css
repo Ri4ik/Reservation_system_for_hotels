@@ -5,6 +5,64 @@
 .navbar-brand img {
     width: 50px;
 }
+
+/*domovska stranka start*/
+.mySwiper {
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    overflow: hidden;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    /*width: 300px;*/
+    /*height: 300px;*/
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transform: scale(0.7);
+    /*opacity: 0.5;*/
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+.swiper-slide-active {
+    transform: scale(1.15); /* делает центральную больше */
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 50vh;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.swiper-slide p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .swiper-slide {
+        transform: scale(0.6); /* уменьшенные превью по бокам */
+    }
+
+    .swiper-slide-active {
+        transform: scale(1);
+    }
+
+    .swiper-slide-active img {
+        height: 50vh;
+        min-width: 50vw; /* минимум 66% от 50vh → гарантирует хорошее соотношение */
+    }
+}
+/*domovska stranka end*/
 /* Общий стиль для таблицы */
 table {
     width: 100%;
@@ -328,11 +386,17 @@ tr:hover {
     }
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* обов'язково! */
+}
 
 
 header {
-    background-image: url('../images/vaiicko_logo.png');
-    background-size: auto 100%;
+    background-image: url('../images/header.jpg');
+    background-size: cover;
+    /*background-size: auto 100%;*/
     background-position: center;
     background-repeat: no-repeat;
     background-color: black;
@@ -378,6 +442,7 @@ html, body {
 /* Контентная часть занимает всю доступную высоту */
 .main-content {
     flex: 1;
+    padding: 20px;
 }
 
 
@@ -601,13 +666,13 @@ input[type="text"], input[type="date"], input[type="time"], select {
 
 
 footer {
-    background-image: url('../images/vaiicko_logo.png');
+    background-image: url('../images/header.jpg');
     background-size: cover; /* Сделает изображение полноэкранным */
-    background-position: center;
+    background-position: bottom;
     color: #fff;
     text-align: center;
     padding: 20px;
-    position: relative;
+    /*position: relative;*/
     font-family: 'Arial', sans-serif;
 
 }
