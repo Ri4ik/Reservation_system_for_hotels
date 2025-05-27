@@ -16,11 +16,9 @@
 <body>
     <div class="wrapper">
         <?php require "App/Views/components/header.view.php"; ?>
-        <div class="container-fluid mt-3">
             <div class="main-content">
                 <?= $contentHTML ?>
             </div>
-        </div>
         <?php require "App/Views/components/footer.view.php"; ?>
     </div>
 </body>
