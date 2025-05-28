@@ -26,15 +26,16 @@ class Review
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
-    public static function create(int $user_id, string $content): bool
+    public static function create(int $user_id, string $content, int $rating): bool
     {
         $stmt = Connection::connect()->prepare("
-            INSERT INTO reviews (user_id, comment, created_at) 
-            VALUES (:user_id, :comment, NOW())
-        ");
+        INSERT INTO reviews (user_id, comment, rating, created_at)
+        VALUES (:user_id, :comment, :rating, NOW())
+    ");
         return $stmt->execute([
             'user_id' => $user_id,
-            'comment' => $content
+            'comment' => $content,
+            'rating' => $rating
         ]);
     }
 

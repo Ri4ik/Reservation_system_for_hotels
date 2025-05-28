@@ -9,9 +9,15 @@ class ReviewController extends AControllerBase
 {
     public function index(): \App\Core\Responses\Response
     {
+        $all = Review::getAll();
+        $avgRating = count($all) ? round(array_sum(array_column($all, 'rating')) / count($all), 2) : 0;
+        $totalVotes = count(array_filter(array_column($all, 'rating')));
         return $this->html([
-            'reviews' => Review::getAll()
+            'reviews' => $all,
+            'avgRating' => $avgRating,
+            'totalVotes' => $totalVotes
         ]);
+
     }
 
     public function create(): \App\Core\Responses\Response
@@ -24,11 +30,16 @@ class ReviewController extends AControllerBase
         if ($this->request()->isPost()) {
             $userId = $this->app->getAuth()->getLoggedUserId(); // точно буде int
             $content = $this->request()->getValue('comment');
+            $rating = (int) $this->request()->getValue('rating');
             if (trim($content ?? '') === '') {
                 $data['message'] = '❌ Obsah recenzie nemôže byť prázdny!';
                 return $this->html($data);
             }
-            Review::create($userId, $content);
+            if ($rating < 1 || $rating > 5) {
+                $data['message'] = '❌ Hodnotenie musí byť od 1 do 5 hviezdičiek.';
+                return $this->html($data);
+            }
+            Review::create($userId, $content, $rating);
             return $this->redirect("?c=review");
         }
 
@@ -127,7 +138,15 @@ class ReviewController extends AControllerBase
             $row['is_admin'] = $isAdmin;
             $row['is_logged'] = $isLogged;
         }
-        return $this->json(['reviews' => $results]);
+        $all = Review::getAll();
+        $avgRating = count($all) ? round(array_sum(array_column($all, 'rating')) / count($all), 2) : 0;
+        $totalVotes = count(array_filter(array_column($all, 'rating')));
+
+        return $this->json([
+            'reviews' => $results,
+            'avg' => $avgRating,
+            'total' => $totalVotes
+        ]);
     }
 
 }
