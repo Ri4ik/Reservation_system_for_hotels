@@ -16,10 +16,18 @@ class ReviewController extends AControllerBase
 
     public function create(): \App\Core\Responses\Response
     {
+        // Якщо не авторизований — перекинути на логін
+        if (!$this->app->getAuth()->isLogged()) {
+            return $this->redirect(\App\Config\Configuration::LOGIN_URL);
+        }
 
         if ($this->request()->isPost()) {
             $userId = $this->app->getAuth()->getLoggedUserId(); // точно буде int
-            $content = $this->request()->getValue('content');
+            $content = $this->request()->getValue('comment');
+            if (trim($content ?? '') === '') {
+                $data['message'] = '❌ Obsah recenzie nemôže byť prázdny!';
+                return $this->html($data);
+            }
             Review::create($userId, $content);
             return $this->redirect("?c=review");
         }
@@ -30,15 +38,43 @@ class ReviewController extends AControllerBase
 
     public function edit(): \App\Core\Responses\Response
     {
-        $id = (int)$this->request()->getValue('id');
-        $review = Review::getById($id);
+        $id = $this->request()->getValue('id');
 
         if ($this->request()->isPost()) {
-            $content = $this->request()->getValue('content');
-            Review::update($id, $content);
-            return $this->redirect("?c=review");
+            $form = $this->request()->getPost();
+
+            $content = trim($form['content'] ?? '');
+
+            if ($content !== '') {
+                \App\Models\Review::update($id, $content);
+                return $this->redirect('?c=review');
+            } else {
+                $data['message'] = '❌ Obsah recenzie nemôže byť prázdny!';
+            }
         }
 
-        return $this->html(['review' => $review]);
+        $review = \App\Models\Review::getById($id);
+
+        if (!$review) {
+            return $this->redirect('?c=review');
+        }
+
+        return $this->html(['review' => $review] + ($data ?? []));
     }
+
+    public function delete(): \App\Core\Responses\Response
+    {
+        // Перевірка ролі
+        if (!$this->app->getAuth()->isAdmin()) {
+            return $this->redirect('?c=review');
+        }
+
+        $id = $this->request()->getValue('id');
+        if ($id && is_numeric($id)) {
+            \App\Models\Review::deleteById((int)$id);
+        }
+
+        return $this->redirect('?c=review');
+    }
+
 }

@@ -29,23 +29,28 @@ class Review
     public static function create(int $user_id, string $content): bool
     {
         $stmt = Connection::connect()->prepare("
-            INSERT INTO reviews (user_id, content, created_at) 
-            VALUES (:user_id, :content, NOW())
+            INSERT INTO reviews (user_id, comment, created_at) 
+            VALUES (:user_id, :comment, NOW())
         ");
         return $stmt->execute([
             'user_id' => $user_id,
-            'content' => $content
+            'comment' => $content
         ]);
     }
 
     public static function update(int $id, string $content): bool
     {
         $stmt = Connection::connect()->prepare("
-            UPDATE reviews SET content = :content WHERE id = :id
+            UPDATE reviews SET comment = :comment  WHERE id = :id
         ");
         return $stmt->execute([
             'id' => $id,
-            'content' => $content
+            'comment' => $content
         ]);
+    }
+    public static function deleteById(int $id): bool
+    {
+        $stmt = Connection::connect()->prepare("DELETE FROM reviews WHERE id = :id");
+        return $stmt->execute(['id' => $id]);
     }
 }
