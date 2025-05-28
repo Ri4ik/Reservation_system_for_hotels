@@ -51,4 +51,10 @@ class DatabaseAuthenticator implements IAuthenticator
     {
         return isset($_SESSION['user']);
     }
+
+    public function isAdmin(): bool
+    {
+        $user = $this->getLoggedUserContext();
+        return isset($user['role']) && $user['role'] === 'admin';
+    }
 }

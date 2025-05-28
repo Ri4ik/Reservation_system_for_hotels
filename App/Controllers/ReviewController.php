@@ -61,20 +61,73 @@ class ReviewController extends AControllerBase
 
         return $this->html(['review' => $review] + ($data ?? []));
     }
-
-    public function delete(): \App\Core\Responses\Response
+    public function ajaxDelete(): \App\Core\Responses\JsonResponse
     {
-        // Перевірка ролі
         if (!$this->app->getAuth()->isAdmin()) {
-            return $this->redirect('?c=review');
+            return $this->json(['success' => false, 'message' => 'Unauthorized']);
         }
 
-        $id = $this->request()->getValue('id');
+        $id = $this->request()->getValue('review_id');
+
         if ($id && is_numeric($id)) {
-            \App\Models\Review::deleteById((int)$id);
+            $success = \App\Models\Review::deleteById((int)$id);
+            return $this->json(['success' => $success]);
         }
 
-        return $this->redirect('?c=review');
+        return $this->json(['success' => false, 'message' => 'Invalid ID']);
+    }
+//    public function delete(): \App\Core\Responses\Response
+//    {
+//        // Перевірка ролі
+//        if (!$this->app->getAuth()->isAdmin()) {
+//            return $this->redirect('?c=review');
+//        }
+//
+//        $id = $this->request()->getValue('id');
+//        if ($id && is_numeric($id)) {
+//            \App\Models\Review::deleteById((int)$id);
+//        }
+//
+//        return $this->redirect('?c=review');
+//    }
+    public function search(): \App\Core\Responses\JsonResponse
+    {
+        $isAdmin = $this->app->getAuth()->isAdmin();
+        $isLogged = $this->app->getAuth()->isLogged();
+        $author = $this->request()->getValue('author');
+        $date = $this->request()->getValue('date');
+
+        $results = [];
+
+        $pdo = \App\Core\DB\Connection::connect();
+
+        $sql = "SELECT r.*, u.name AS user_name 
+            FROM reviews r 
+            JOIN users u ON r.user_id = u.id 
+            WHERE 1=1";
+
+        $params = [];
+
+        if (!empty($author)) {
+            $sql .= " AND u.name LIKE :author";
+            $params['author'] = '%' . $author . '%';
+        }
+
+        if (!empty($date)) {
+            $sql .= " AND DATE(r.created_at) = :date";
+            $params['date'] = $date;
+        }
+
+        $sql .= " ORDER BY r.created_at DESC";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        foreach ($results as &$row) {
+            $row['is_admin'] = $isAdmin;
+            $row['is_logged'] = $isLogged;
+        }
+        return $this->json(['reviews' => $results]);
     }
 
 }
