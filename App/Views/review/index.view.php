@@ -28,8 +28,8 @@
             <div class="review-time">
                 <?= $r['created_at'] ?>
             </div class="review-actions">
-                <a href="?c=review&a=edit&id=<?= $r['id'] ?>" class="edit-review">✏️Upraviť</a>
                 <?php if ($this->app->getAuth()->isAdmin()): ?>
+                    <a href="?c=review&a=edit&id=<?= $r['id'] ?>" class="edit-review">✏️Upraviť</a>
                     <a href="#" class="delete-review" data-id="<?= $r['id'] ?>">❌Zmazať</a>
                 <?php endif; ?>
             </div>

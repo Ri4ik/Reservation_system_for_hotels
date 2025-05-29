@@ -31,14 +31,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         `<h3>Priemerné hodnotenie: ${data.avg ?? '0'} ⭐ (${data.total} hlasov)</h3>`;
                 }
 
-                if (data.reviews[0].is_logged) {
-                    const addBtn = document.createElement('a');
-                    addBtn.href = '?c=review&a=create';
-                    addBtn.className = 'create-review';
-                    addBtn.textContent = '➕Pridať recenziu';
-                    reviewsList.appendChild(addBtn);
+                // Завжди показувати кнопку "Pridať recenziu"
+                const addBtn = document.createElement('a');
+                addBtn.className = 'create-review';
+                addBtn.textContent = '➕ Pridať recenziu';
+                addBtn.href = data.reviews[0]?.is_logged
+                    ? '?c=review&a=create'
+                    : '?c=auth&a=login';
 
-                }
+                reviewsList.appendChild(addBtn);
 
                 data.reviews.forEach(review => {
                     const item = document.createElement('div');
