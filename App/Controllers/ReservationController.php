@@ -16,7 +16,7 @@ class ReservationController extends AControllerBase
         $currentUser = $_SESSION['user'] ?? null;
 
         if (!$currentUser) {
-            return $this->redirect("?c=auth&a=login");
+            return $this->redirect("?c=Auth&a=login");
         }
 
         if ($currentUser['role'] === 'admin') {
@@ -33,7 +33,7 @@ class ReservationController extends AControllerBase
 
     public function create(): Response
     {
-        $rooms = Room::getAll();
+        $rooms = Room::getAllRooms();
         return $this->html(['rooms' => $rooms]);
     }
 
@@ -45,8 +45,8 @@ class ReservationController extends AControllerBase
         $reservation = new Reservation();
         $reservation->setUserId($userId);
         $reservation->setRoomId($data['room_id']);
-        $reservation->setDateFrom($data['date_from']);
-        $reservation->setDateTo($data['date_to']);
+        $reservation->setCheckin($data['date_from']);
+        $reservation->setCheckout($data['date_to']);
         $reservation->setStatus('pending');
         $reservation->save();
 
@@ -57,7 +57,7 @@ class ReservationController extends AControllerBase
     {
         $id = $this->request()->getValue('id');
         $reservation = Reservation::getOne($id);
-        $rooms = Room::getAll();
+        $rooms = Room::getAllRooms();
 
         if (!$reservation || $_SESSION['user']['id'] !== $reservation->getUserId()) {
             return $this->redirect("?c=reservation");
@@ -79,8 +79,8 @@ class ReservationController extends AControllerBase
         }
 
         $reservation->setRoomId($data['room_id']);
-        $reservation->setDateFrom($data['date_from']);
-        $reservation->setDateTo($data['date_to']);
+        $reservation->setCheckin($data['date_from']);
+        $reservation->setCheckout($data['date_to']);
         $reservation->save();
 
         return $this->redirect("?c=reservation");
@@ -108,6 +108,22 @@ class ReservationController extends AControllerBase
             ($currentUser['role'] === 'admin' || $currentUser['id'] === $reservation->getUserId())) {
             $reservation->setStatus('canceled');
             $reservation->save();
+        }
+
+        return $this->redirect("?c=reservation");
+    }
+    public function delete(): Response
+    {
+        $id = $this->request()->getValue('id');
+        $reservation = Reservation::getOne($id);
+
+        $currentUser = $_SESSION['user'] ?? null;
+
+        if ($reservation && (
+                $currentUser['role'] === 'admin' ||
+                $currentUser['id'] === $reservation->getUserId()
+            )) {
+            $reservation->delete();
         }
 
         return $this->redirect("?c=reservation");
