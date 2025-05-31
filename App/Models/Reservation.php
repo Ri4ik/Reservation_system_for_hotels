@@ -43,12 +43,12 @@ class Reservation extends Model
     {
         $db = Connection::connect();
         $stmt = $db->prepare("
-            SELECT r.*, u.name AS user_name, rm.name AS room_name
-            FROM reservations r
-            JOIN users u ON r.user_id = u.id
-            JOIN rooms rm ON r.room_id = rm.id
-            ORDER BY r.check_in DESC
-        ");
+        SELECT r.*, u.name AS user_name, u.email AS user_email, rm.name AS room_name
+        FROM reservations r
+        JOIN users u ON r.user_id = u.id
+        JOIN rooms rm ON r.room_id = rm.id
+        ORDER BY r.check_in DESC
+    ");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -76,4 +76,113 @@ class Reservation extends Model
     public function getUserName(): ?string {
         return $this->user_name ?? null;
     }
+    public static function searchAdmin($userName, $roomName, $status, $dateFrom, $dateTo): array
+    {
+        $db = Connection::connect();
+        $sql = "
+        SELECT r.*, u.name AS user_name, u.email AS user_email, rm.name AS room_name
+        FROM reservations r
+        JOIN users u ON r.user_id = u.id
+        JOIN rooms rm ON r.room_id = rm.id
+        WHERE 1=1
+    ";
+
+        $params = [];
+
+        if ($userName !== '') {
+            $sql .= " AND u.name LIKE :user";
+            $params[':user'] = "%$userName%";
+        }
+
+        if ($roomName !== '') {
+            $sql .= " AND rm.name LIKE :room";
+            $params[':room'] = "%$roomName%";
+        }
+
+        if ($status !== '') {
+            $sql .= " AND r.status = :status";
+            $params[':status'] = $status;
+        }
+
+        if ($dateFrom !== '') {
+            $sql .= " AND r.check_in >= :dateFrom";
+            $params[':dateFrom'] = $dateFrom;
+        }
+
+        if ($dateTo !== '') {
+            $sql .= " AND r.check_out <= :dateTo";
+            $params[':dateTo'] = $dateTo;
+        }
+
+        $sql .= " ORDER BY r.check_in DESC";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function searchReservations(
+        bool $isAdmin,
+        ?int $currentUserId,
+        ?string $userName = '',
+        ?string $roomName = '',
+        ?string $status = '',
+        ?string $dateFrom = '',
+        ?string $dateTo = ''
+    ): array
+    {
+        $db = Connection::connect();
+
+        // Базовый SELECT
+        $sql = "
+        SELECT r.*, u.name AS user_name, u.email AS user_email, rm.name AS room_name
+        FROM reservations r
+        JOIN users u ON r.user_id = u.id
+        JOIN rooms rm ON r.room_id = rm.id
+        WHERE 1=1
+    ";
+
+        $params = [];
+
+        // Если не админ — всегда фильтруем по своему userId
+        if (!$isAdmin) {
+            $sql .= " AND r.user_id = :uid";
+            $params[':uid'] = $currentUserId;
+        } else {
+            // Для админа — если передан фильтр по имени пользователя
+            if (!empty($userName)) {
+                $sql .= " AND u.name LIKE :user";
+                $params[':user'] = "%$userName%";
+            }
+        }
+
+        // Общие фильтры
+        if (!empty($roomName)) {
+            $sql .= " AND rm.name LIKE :room";
+            $params[':room'] = "%$roomName%";
+        }
+
+        if (!empty($status)) {
+            $sql .= " AND r.status = :status";
+            $params[':status'] = $status;
+        }
+
+        if (!empty($dateFrom)) {
+            $sql .= " AND r.check_in >= :dateFrom";
+            $params[':dateFrom'] = $dateFrom;
+        }
+
+        if (!empty($dateTo)) {
+            $sql .= " AND r.check_out <= :dateTo";
+            $params[':dateTo'] = $dateTo;
+        }
+
+        $sql .= " ORDER BY r.check_in DESC";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }
