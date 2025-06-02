@@ -32,6 +32,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     const tr = document.createElement('tr');
                     tr.id = 'reservation-' + res.id;
 
+                    // Добавляем CSS-класс в зависимости от статуса
+                    let statusClass = '';
+                    if (res.status === 'čaká na schválenie') {
+                        statusClass = 'status-pending';
+                    } else if (res.status === 'potvrdená') {
+                        statusClass = 'status-confirmed';
+                    } else if (res.status === 'zrušená') {
+                        statusClass = 'status-cancelled';
+                    }
+                    tr.classList.add(statusClass);
+
                     let html = '';
 
                     if (IS_ADMIN) {
@@ -39,20 +50,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     html += `
-                        <td>${res.room_name}</td>
-                        <td>${res.check_in}</td>
-                        <td>${res.check_out}</td>
-                        <td>${res.status}</td>
-                        <td>
-                    `;
+                                <td>${res.room_name}</td>
+                                <td>${res.check_in}</td>
+                                <td>${res.check_out}</td>
+                                <td>${res.status}</td>
+                                <td>
+                            `;
 
                     if (res.status === 'čaká na schválenie') {
                         if (IS_ADMIN) {
                             html += `<a href="#" class="confirm-reservation" data-id="${res.id}">✅</a>
-                                     <a href="#" class="cancel-reservation" data-id="${res.id}">❌</a>`;
+                     <a href="#" class="cancel-reservation" data-id="${res.id}">❌</a>`;
                         } else {
                             html += `<a href="?c=reservation&a=edit&id=${res.id}">✏️</a>
-                                     <a href="?c=reservation&a=delete&id=${res.id}" onclick="return confirm('Naozaj zrušiť rezerváciu?')">❌</a>`;
+                     <a href="?c=reservation&a=delete&id=${res.id}" onclick="return confirm('Naozaj zrušiť rezerváciu?')">❌</a>`;
                         }
                     }
 

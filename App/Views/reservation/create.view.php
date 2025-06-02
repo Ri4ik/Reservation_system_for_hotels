@@ -1,7 +1,13 @@
 <main>
     <h4>Vytvoriť rezerváciu</h4>
+    <div style="display: flex; justify-content: flex-start; margin-bottom: 20px;">
+        <a href="?c=reservation" class="back--review">Späť na zoznam rezervácií</a>
+    </div>
 
     <form method="post" action="?c=reservation&a=store">
+        <?php if (!empty($message)) : ?>
+            <p class="validate-error"><?= htmlspecialchars($message) ?></p>
+        <?php endif; ?>
         <div>
             <label for="room_id">Izba:</label>
             <select name="room_id" required>
@@ -25,6 +31,4 @@
 
         <button type="submit">Rezervovať</button>
     </form>
-
-    <a href="?c=reservation">⏪ Späť na zoznam rezervácií</a>
 </main>
