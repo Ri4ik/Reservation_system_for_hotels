@@ -10,7 +10,10 @@
 <head>
     <title><?= \App\Config\Configuration::APP_NAME ?></title>
     <link rel="stylesheet" href="public/css/styl.css">
-    <script src="public/js/script.js"></script>
+<!--    <script src="public/js/script.js"></script>-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/sk.js"></script>-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>

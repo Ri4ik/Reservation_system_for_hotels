@@ -54,7 +54,7 @@ class ReviewController extends AControllerBase
         if ($this->request()->isPost()) {
             $form = $this->request()->getPost();
 
-            $content = trim($form['content'] ?? '');
+            $content = trim($form['comment'] ?? '');
 
             if ($content !== '') {
                 \App\Models\Review::update($id, $content);
@@ -87,20 +87,6 @@ class ReviewController extends AControllerBase
 
         return $this->json(['success' => false, 'message' => 'Invalid ID']);
     }
-//    public function delete(): \App\Core\Responses\Response
-//    {
-//        // Перевірка ролі
-//        if (!$this->app->getAuth()->isAdmin()) {
-//            return $this->redirect('?c=review');
-//        }
-//
-//        $id = $this->request()->getValue('id');
-//        if ($id && is_numeric($id)) {
-//            \App\Models\Review::deleteById((int)$id);
-//        }
-//
-//        return $this->redirect('?c=review');
-//    }
     public function search(): \App\Core\Responses\JsonResponse
     {
         $isAdmin = $this->app->getAuth()->isAdmin();

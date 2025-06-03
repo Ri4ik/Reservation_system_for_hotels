@@ -76,9 +76,12 @@
     </div>
 
 
-    <a class="create-review" href="?c=reservation&a=create">Nová rezervácia</a>
+    <div style="display: flex; justify-content: flex-start; ">
+        <a class="create-review" href="?c=reservation&a=create">Nová rezervácia</a>
+    </div>
 
     <table>
+
         <thead>
         <tr>
             <?php if ($isAdmin): ?>

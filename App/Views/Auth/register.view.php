@@ -29,4 +29,4 @@
     </form>
 </div>
 
-<script src="public/js/validation.js"></script>
+<script src="public/js/validation-register.js"></script>

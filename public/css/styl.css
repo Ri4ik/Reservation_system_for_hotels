@@ -13,6 +13,11 @@
     gap: 15px;
     margin-bottom: 20px;
 }
+.flatpickr-disabled-highlight {
+    background: #ffcccc !important;
+    color: #b00020 !important;
+    border-radius: 50%;
+}
 
 
 table {
@@ -59,42 +64,8 @@ tr:hover {
     background-color: rgba(240, 100, 100, 0.4);
 }
 
-@media (max-width: 768px) {
-    table, thead, tbody, th, td, tr {
-        display: block;
-    }
 
-    tr {
-        margin-bottom: 15px;
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        padding: 10px;
-    }
 
-    th {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-
-    td {
-        border: none;
-        padding-left: 50%;
-        position: relative;
-    }
-
-    td:before {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        width: 45%;
-        white-space: nowrap;
-        font-weight: 600;
-        color: #056e05;
-        content: attr(data-label);
-    }
-}
 
 
 /*status rezervacie*/
@@ -149,17 +120,6 @@ tr:hover {
     border-radius: 4px;
     width: 100%;
 }
-
-/*.search-field button {*/
-/*    padding: 10px 20px;*/
-/*    font-size: 14px;*/
-/*    border-radius: 4px;*/
-/*    border: none;*/
-/*    background-color: #e3342f;*/
-/*    color: white;*/
-/*    cursor: pointer;*/
-/*}*/
-
 @media (max-width: 768px) {
     .search-fields {
         display: flex;
@@ -327,89 +287,6 @@ tr:hover {
     text-decoration: underline;
 }
 /*forms end*/
-
-/*error message start*/
-/*.message-box {*/
-/*    margin-top: 1rem;*/
-/*    padding: 1rem;*/
-/*    background-color: #ffe0e0;*/
-/*    color: #8a1f1f;*/
-/*    border: 1px solid #d22;*/
-/*    border-radius: 5px;*/
-/*    font-weight: bold;*/
-/*    animation: fadeIn 0.5s ease-in;*/
-/*}*/
-
-/*@keyframes fadeIn {*/
-/*    from { opacity: 0; transform: translateY(-5px); }*/
-/*    to { opacity: 1; transform: translateY(0); }*/
-/*}*/
-/*error message end*/
-/* Общий стиль для таблицы */
-/*table {*/
-/*    width: 100%;*/
-/*    border-collapse: collapse;*/
-/*    text-align: center;*/
-/*    overflow-x: auto; !* Горизонтальная прокрутка *!*/
-/*    -webkit-overflow-scrolling: touch; !* Плавная прокрутка для iOS *!*/
-/*}*/
-
-/*!* Стиль для ячеек таблицы *!*/
-/*th, td {*/
-/*    border: 1px solid #ddd; !* Мягкая светлая граница *!*/
-/*    padding: 10px 15px; !* Удобное расстояние для чтения *!*/
-/*    text-align: left; !* Текст слева для большей читаемости *!*/
-/*    font-size: 14px; !* Читаемый размер шрифта *!*/
-/*    !*background-color: #fff; !* Белый фон для ячеек *!*!*/
-/*}*/
-
-/*!* Стиль для заголовков *!*/
-/*th {*/
-/*    background-color: #f5f5f5; !* Светлый фон для заголовков *!*/
-/*    font-weight: bold; !* Жирный шрифт *!*/
-/*    color: #333; !* Тёмный цвет текста для заголовков *!*/
-/*    border-bottom: 2px solid #ddd; !* Толстая граница внизу *!*/
-/*}*/
-
-/*!* Стиль для ячеек *!*/
-/*td {*/
-/*    color: #666; !* Мягкий цвет текста для ячеек *!*/
-/*}*/
-
-/*!* Псевдо-стиль для пустых ячеек, если это необходимо *!*/
-/*td:empty {*/
-/*    background-color: #f9f9f9; !* Легкая подложка для пустых ячеек *!*/
-/*}*/
-
-/*!* Респонсивный дизайн для мобильных устройств *!*/
-/*@media (max-width: 768px) {*/
-/*    table {*/
-/*        display: block; !* Делаем таблицу блоком *!*/
-/*        overflow-x: auto; !* Добавляем горизонтальную прокрутку *!*/
-/*        -webkit-overflow-scrolling: touch; !* Плавная прокрутка на мобильных устройствах *!*/
-/*    }*/
-
-/*    th, td {*/
-/*        padding: 10px 5px; !* Уменьшаем отступы на мобильных устройствах *!*/
-/*        font-size: 12px; !* Меньший шрифт для мобильных устройств *!*/
-/*    }*/
-
-/*    !* Стили для ползунка прокрутки *!*/
-/*    table::-webkit-scrollbar {*/
-/*        height: 10px; !* Устанавливаем высоту горизонтальной полосы прокрутки *!*/
-/*    }*/
-
-/*    table::-webkit-scrollbar-thumb {*/
-/*        background-color: #2f075e; !* Цвет ползунка *!*/
-/*        border-radius: 6px;*/
-/*    }*/
-
-/*    table::-webkit-scrollbar-track {*/
-/*        background-color: #f1f1f1; !* Цвет фона полосы прокрутки *!*/
-/*        border-radius: 6px;*/
-/*    }*/
-/*}*/
-
 /* Обертка для формы */
 #search-form {
     display: flex;
@@ -500,40 +377,6 @@ table::-webkit-scrollbar-track {
     table {
         font-size: 10px; /* Еще меньше шрифт для маленьких экранов */
     }
-}
-
-/* Кнопка регистрации*/
-.register-link {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 15px;
-    background-color: #2f075e;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1em;
-    transition: background 0.3s ease-in-out;
-}
-
-.register-link:hover {
-    background-color: #4f1098;
-}
-
-/* Кнопка входа*/
-.login-link {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 15px;
-    background-color: #2f075e;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1em;
-    transition: background 0.3s ease-in-out;
-}
-
-.login-link:hover {
-    background-color: #2f075e;
 }
 
 .about-text {
@@ -781,68 +624,6 @@ textarea[name="comment"], textarea[name="content"] {
     box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
     transform: translateY(-2px);
 }
-
-/*!* Основные стили для таблицы *!*/
-/*table {*/
-/*    width: 100%;*/
-/*    border-collapse: collapse;*/
-/*    margin: 20px 0;*/
-/*    !*background-color: #1a1a1a; !* Черный фон таблицы *!*!*/
-/*    !*color: #ffffff; !* Белый текст *!*!*/
-/*}*/
-
-/*th, td {*/
-/*    text-align: left;*/
-/*    padding: 12px;*/
-/*    border-bottom: 1px solid #333; !* Темно-серая граница для строк *!*/
-/*}*/
-
-/*th {*/
-/*    background-color: #056e05;*/
-/*    !*color: #0d320d;*!*/
-/*}*/
-
-/*!*tr:hover {*!*/
-/*!*    background-color: #aaf3aa; !* Темно-серый фон при наведении *!*!*/
-/*!*}*!*/
-
-/*!* Стили для мобильных устройств *!*/
-/*@media screen and (max-width: 600px) {*/
-/*    table, thead, tbody, th, td, tr {*/
-/*        display: block;*/
-/*    }*/
-
-/*    th {*/
-/*        position: absolute;*/
-/*        top: -9999px;*/
-/*        left: -9999px;*/
-/*    }*/
-
-/*    tr {*/
-/*        margin-bottom: 10px;*/
-/*    }*/
-
-/*    td {*/
-/*        !* Каждая ячейка таблицы будет вести себя как блок *!*/
-/*        border: none;*/
-/*        border-bottom: 1px solid #333;*/
-/*        position: relative;*/
-/*        padding-left: 50%;*/
-/*    }*/
-
-/*    td:before {*/
-/*        !* Добавляем подписи к данным *!*/
-/*        position: absolute;*/
-/*        top: 6px;*/
-/*        left: 6px;*/
-/*        width: 45%;*/
-/*        padding-right: 10px;*/
-/*        white-space: nowrap;*/
-/*        content: attr(data-label); !* Используем атрибут data-label для подписей *!*/
-/*        color: #2f075e; !* Розовый цвет для подписей *!*/
-/*    }*/
-/*}*/
-
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -1075,12 +856,6 @@ nav ul li a {
     height: 450px;
     border: 0;
 }
-/*iframe {*/
-/*    width: 100%;*/
-/*    height: 300px;*/
-/*    border: none;*/
-/*}*/
-/* Стили для формы */
 form {
     display: flex;
     flex-direction: column;
@@ -1255,3 +1030,232 @@ ul {
 .example-2 .icon-content a[data-social="telegram"] ~ .tooltip {
     background-color: #0088cc;
 }
+
+/* Обёртка формы создания и редактирования резервации */
+.reservation-form-wrapper {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    padding: 30px 40px;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+/* Заголовок формы */
+.reservation-form-wrapper h4 {
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #2f075e;
+}
+
+/* Блоки с полями */
+.reservation-form-wrapper form div {
+    /*width: 90%;*/
+    margin-bottom: 20px;
+}
+
+/* Лейблы */
+.reservation-form-wrapper label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #2f075e;
+}
+
+/* Инпуты и селекты */
+.reservation-form-wrapper input[type="text"],
+.reservation-form-wrapper input[type="date"],
+.reservation-form-wrapper select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.reservation-form-wrapper input:focus,
+.reservation-form-wrapper select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+    outline: none;
+}
+
+/* Кнопка сабмита (в твоём общем стиле create-review) */
+.reservation-form-wrapper button[type="submit"] {
+    display: inline-block;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.reservation-form-wrapper button[type="submit"]:hover {
+    background: linear-gradient(135deg, #3b82f6, #4f46e5);
+    transform: scale(1.02);
+    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.5);
+}
+* {
+    box-sizing: border-box;
+}
+@media (max-width: 768px) {
+    table {
+        border: none;
+        box-shadow: none;
+        width: 100%;
+    }
+
+    thead {
+        display: none !important;
+        visibility: hidden;
+        height: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    table, tbody, tr, td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    tr {
+        margin: 10px auto; /* по центру */
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        padding: 12px;
+        width: 90%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    tr:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    }
+
+    td {
+        position: relative;
+        display: block;
+        padding: 8px 10px;
+        font-size: 15px;
+        border-bottom: 1px solid #eee;
+        word-break: break-word;
+        box-sizing: border-box;
+    }
+
+    td:before {
+        content: attr(data-label);
+        display: block;
+        font-weight: 700;
+        color: #056e05;
+        margin-bottom: 4px;
+    }
+
+    td:last-child {
+        border-bottom: none;
+        text-align: center;
+    }
+
+    td a {
+        font-size: 18px;
+        margin: 0 8px;
+    }
+    .reservation-form-wrapper {
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        padding: 15px 20px; !important;
+        max-width: 450px;
+        margin: 0 auto;
+    }
+}
+
+.review-form-wrapper {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    padding: 30px 40px;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+/* Заголовок формы */
+.review-form-wrapper h4 {
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #2f075e;
+}
+
+/* Блоки с полями */
+.review-form-wrapper form div {
+    margin-bottom: 20px;
+}
+
+/* Лейблы */
+.review-form-wrapper label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #2f075e;
+}
+
+/* Поля ввода */
+.review-form-wrapper textarea,
+.review-form-wrapper select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.review-form-wrapper textarea:focus,
+.review-form-wrapper select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+    outline: none;
+}
+
+/* Кнопка сабмита */
+.review-form-wrapper button[type="submit"] {
+    display: inline-block;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.review-form-wrapper button[type="submit"]:hover {
+    background: linear-gradient(135deg, #3b82f6, #4f46e5);
+    transform: scale(1.02);
+    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.5);
+}
+
+@media (max-width: 768px) {
+    .review-form-wrapper {
+        padding: 20px 20px;
+    }
+}
+

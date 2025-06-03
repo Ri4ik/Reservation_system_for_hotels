@@ -38,20 +38,41 @@ class ReservationController extends AControllerBase
         return $this->html(['rooms' => $rooms]);
     }
 
-    public function store(): Response
+    public function store(): \App\Core\Responses\Response
     {
         $data = $this->request()->getPost();
         $userId = $_SESSION['user']['id'];
 
-        $reservation = new Reservation();
-        $reservation->setUserId($userId);
-        $reservation->setRoomId($data['room_id']);
-        $reservation->setCheckin($data['date_from']);
-        $reservation->setCheckout($data['date_to']);
-        $reservation->setStatus('čaká na schválenie');
-        $reservation->save();
+        $roomId = isset($data['room_id']) ? intval($data['room_id']) : 0;
+        $dateFrom = $data['date_from'];
+        $dateTo = $data['date_to'];
 
-        return $this->redirect("?c=reservation");
+        $today = date('Y-m-d');
+        $room = Room::getRoomByID($roomId);
+        // Валидация данных
+        if (!$room) {
+            $message = '❌Zvolená izba neexistuje.';
+        } elseif (empty($roomId) || empty($dateFrom) || empty($dateTo)) {
+            $message = '❌Všetky polia musia byť vyplnené.';
+        } elseif ($dateFrom < $today) {
+            $message = '❌Dátum od nemôže byť v minulosti.';
+        } elseif ($dateTo <= $dateFrom) {
+            $message = '❌Dátum do musí byť neskorší ako dátum od.';
+        } elseif (Reservation::hasConflict($roomId, $dateFrom, $dateTo)) {
+            $message = '❌Na zvolené dátumy už existuje potvrdená rezervácia.';
+        } else {
+            $reservation = new Reservation();
+            $reservation->setUserId($userId);
+            $reservation->setRoomId($roomId);
+            $reservation->setCheckin($dateFrom);
+            $reservation->setCheckout($dateTo);
+            $reservation->setStatus('čaká na schválenie');
+            $reservation->save();
+
+            return $this->redirect("?c=reservation");
+        }
+        $rooms = Room::getAllRooms();
+        return $this->html(['rooms' => $rooms, 'message' => $message], 'create');
     }
 
     public function edit(): Response
@@ -79,25 +100,40 @@ class ReservationController extends AControllerBase
             return $this->redirect("?c=reservation");
         }
 
-        $reservation->setRoomId($data['room_id']);
-        $reservation->setCheckin($data['date_from']);
-        $reservation->setCheckout($data['date_to']);
-        $reservation->save();
+        $roomId = isset($data['room_id']) ? intval($data['room_id']) : 0;
+        $dateFrom = $data['date_from'];
+        $dateTo = $data['date_to'];
 
-        return $this->redirect("?c=reservation");
+        $today = date('Y-m-d');
+        $room = Room::getRoomByID($roomId);
+        if (!$room) {
+            $message = '❌Zvolená izba neexistuje.';
+        } elseif (empty($roomId) || empty($dateFrom) || empty($dateTo)) {
+            $message = '❌Všetky polia musia byť vyplnené.';
+        } elseif ($dateFrom < $today) {
+            $message = '❌Dátum od nemôže byť v minulosti.';
+        } elseif ($dateTo <= $dateFrom) {
+            $message = '❌Dátum do musí byť neskorší ako dátum od.';
+        } elseif (Reservation::hasConflict($roomId, $dateFrom, $dateTo, $reservation->getId())) {
+            $message = '❌Na zvolené dátumy už existuje potvrdená rezervácia.';
+        } else {
+            $reservation->setRoomId($roomId);
+            $reservation->setCheckin($dateFrom);
+            $reservation->setCheckout($dateTo);
+            $reservation->save();
+
+            return $this->redirect("?c=reservation");
+        }
+
+//        return $this->html($message);
+        $rooms = Room::getAllRooms();
+        return $this->html([
+            'reservation' => $reservation,
+            'rooms' => $rooms,
+            'message' => $message
+        ], 'edit');
     }
 
-//    public function confirm(): Response
-//    {
-//        $id = $this->request()->getValue('id');
-//        $reservation = Reservation::getOne($id);
-//        if ($reservation && $_SESSION['user']['role'] === 'admin') {
-//            $reservation->setStatus('potvrdená');
-//            $reservation->save();
-//        }
-//
-//        return $this->redirect("?c=reservation");
-//    }
     public function confirm(): \App\Core\Responses\JsonResponse
     {
         // Проверка прав через централизованный Auth
@@ -121,6 +157,8 @@ class ReservationController extends AControllerBase
 
         return $this->json(['success' => false, 'message' => 'Invalid ID']);
     }
+
+
 
     public function cancel(): \App\Core\Responses\JsonResponse
     {
@@ -191,4 +229,32 @@ class ReservationController extends AControllerBase
             'isAdmin' => $currentUser['role'] === 'admin'
         ]);
     }
+
+    public function checkAvailability(): \App\Core\Responses\JsonResponse
+    {
+        $roomId = intval($this->request()->getValue('room_id'));
+        $dateFrom = $this->request()->getValue('date_from');
+        $dateTo = $this->request()->getValue('date_to');
+
+        if (!$roomId || !$dateFrom || !$dateTo) {
+            return $this->json(['available' => false, 'message' => 'Neplatné vstupy']);
+        }
+
+        $conflict = Reservation::hasConflict($roomId, $dateFrom, $dateTo);
+        return $this->json(['available' => !$conflict]);
+    }
+
+    public function getUnavailableDates(): \App\Core\Responses\JsonResponse
+    {
+        $roomId = $this->request()->getValue('room_id');
+
+        if (!$roomId || !is_numeric($roomId)) {
+            return $this->json(['unavailable' => []]);
+        }
+
+        $unavailableDates = Reservation::getUnavailableDatesForRoom((int)$roomId);
+
+        return $this->json(['unavailable' => $unavailableDates]);
+    }
+
 }

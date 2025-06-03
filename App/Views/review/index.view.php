@@ -6,7 +6,7 @@
         <div class="search-fields">
             <input type="text" id="search-author" name="search-author" placeholder="Hľadať podľa autora" />
             <input type="date" id="search-date" name="search-date" />
-            <button type="button" id="clear-filters">✖</button>
+            <button type="button" id="clear-filters">✖ Vymazať filtre</button>
         </div>
     </form>
     <div id="avg-rating">

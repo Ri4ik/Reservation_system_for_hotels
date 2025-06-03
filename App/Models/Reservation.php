@@ -76,51 +76,6 @@ class Reservation extends Model
     public function getUserName(): ?string {
         return $this->user_name ?? null;
     }
-    public static function searchAdmin($userName, $roomName, $status, $dateFrom, $dateTo): array
-    {
-        $db = Connection::connect();
-        $sql = "
-        SELECT r.*, u.name AS user_name, u.email AS user_email, rm.name AS room_name
-        FROM reservations r
-        JOIN users u ON r.user_id = u.id
-        JOIN rooms rm ON r.room_id = rm.id
-        WHERE 1=1
-    ";
-
-        $params = [];
-
-        if ($userName !== '') {
-            $sql .= " AND u.name LIKE :user";
-            $params[':user'] = "%$userName%";
-        }
-
-        if ($roomName !== '') {
-            $sql .= " AND rm.name LIKE :room";
-            $params[':room'] = "%$roomName%";
-        }
-
-        if ($status !== '') {
-            $sql .= " AND r.status = :status";
-            $params[':status'] = $status;
-        }
-
-        if ($dateFrom !== '') {
-            $sql .= " AND r.check_in >= :dateFrom";
-            $params[':dateFrom'] = $dateFrom;
-        }
-
-        if ($dateTo !== '') {
-            $sql .= " AND r.check_out <= :dateTo";
-            $params[':dateTo'] = $dateTo;
-        }
-
-        $sql .= " ORDER BY r.check_in DESC";
-
-        $stmt = $db->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
     public static function searchReservations(
         bool $isAdmin,
         ?int $currentUserId,
@@ -183,6 +138,59 @@ class Reservation extends Model
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public static function hasConflict(int $roomId, string $dateFrom, string $dateTo, ?int $excludeReservationId = null): bool
+    {
+        $db = Connection::connect();
 
+        $sql = "
+        SELECT COUNT(*) as cnt FROM reservations
+        WHERE room_id = :roomId
+          AND status = 'potvrdená'
+          AND NOT (check_out <= :dateFrom OR check_in >= :dateTo)
+    ";
+
+        $params = [
+            ':roomId' => $roomId,
+            ':dateFrom' => $dateFrom,
+            ':dateTo' => $dateTo
+        ];
+
+        // Если редактируем — исключаем текущую резервацию из проверки
+        if ($excludeReservationId !== null) {
+            $sql .= " AND id != :excludeId";
+            $params[':excludeId'] = $excludeReservationId;
+        }
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['cnt'] > 0;
+    }
+
+    public static function getUnavailableDatesForRoom(int $roomId): array
+    {
+        $db = Connection::connect();
+        $stmt = $db->prepare("
+        SELECT check_in, check_out 
+        FROM reservations 
+        WHERE room_id = :room_id AND status = 'potvrdená'
+    ");
+        $stmt->execute(['room_id' => $roomId]);
+
+        $unavailableDates = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $start = new \DateTime($row['check_in']);
+            $end = new \DateTime($row['check_out']);
+
+            while ($start <= $end) {
+                $unavailableDates[] = $start->format('Y-m-d');
+                $start->modify('+1 day');
+            }
+        }
+
+        return $unavailableDates;
+    }
 
 }

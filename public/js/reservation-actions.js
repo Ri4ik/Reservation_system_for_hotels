@@ -46,25 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     let html = '';
 
                     if (IS_ADMIN) {
-                        html += `<td>${res.user_name}</td><td>${res.user_email}</td>`;
+                        html += `<td data-label="Meno zákazníka">${res.user_name}</td>`;
+                        html += `<td data-label="Email">${res.user_email}</td>`;
                     }
 
                     html += `
-                                <td>${res.room_name}</td>
-                                <td>${res.check_in}</td>
-                                <td>${res.check_out}</td>
-                                <td>${res.status}</td>
-                                <td>
-                            `;
+                        <td data-label="Izba">${res.room_name}</td>
+                        <td data-label="Od">${res.check_in}</td>
+                        <td data-label="Do">${res.check_out}</td>
+                        <td data-label="Stav">${res.status}</td>
+                        <td data-label="Akcie">
+                    `;
 
                     if (res.status === 'čaká na schválenie') {
                         if (IS_ADMIN) {
                             html += `<a href="#" class="confirm-reservation" data-id="${res.id}">✅</a>
-                     <a href="#" class="cancel-reservation" data-id="${res.id}">❌</a>`;
-                        } else {
-                            html += `<a href="?c=reservation&a=edit&id=${res.id}">✏️</a>
-                     <a href="?c=reservation&a=delete&id=${res.id}" onclick="return confirm('Naozaj zrušiť rezerváciu?')">❌</a>`;
+                                     <a href="#" class="cancel-reservation" data-id="${res.id}">❌</a>`;
                         }
+                        html += `<a href="?c=reservation&a=edit&id=${res.id}">✏️</a>
+                                 <a href="?c=reservation&a=delete&id=${res.id}" onclick="return confirm('Naozaj zrušiť rezerváciu?')">🗑️</a>`;
                     }
 
                     html += '</td>';
