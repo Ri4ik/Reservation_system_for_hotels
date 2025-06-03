@@ -76,8 +76,11 @@
     </div>
 
 
-    <div style="display: flex; justify-content: flex-start; ">
+    <div style="display: flex; justify-content: flex-start; gap: 15px;">
         <a class="create-review" href="?c=reservation&a=create">Nová rezervácia</a>
+        <?php if ($isAdmin): ?>
+        <a class="create-review export-btn" href="?c=reservation&a=exportReservations">📥 Exportovať rezervácie</a>
+        <?php endif; ?>
     </div>
 
     <table>

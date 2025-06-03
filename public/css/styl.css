@@ -1258,4 +1258,31 @@ ul {
         padding: 20px 20px;
     }
 }
+.export-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.export-btn::before {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 60%);
+    transform: scale(0);
+    transition: transform 0.5s ease;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.export-btn:hover::before {
+    transform: scale(2);
+}
+
+.export-btn span {
+    position: relative;
+    z-index: 1;
+}
 

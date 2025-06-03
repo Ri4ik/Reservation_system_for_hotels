@@ -257,4 +257,36 @@ class ReservationController extends AControllerBase
         return $this->json(['unavailable' => $unavailableDates]);
     }
 
+    public function exportReservations() {
+        $reservations = Reservation::getAllWithUsersAndRooms();
+        $filename = "rezervacie_" . date("Y_m_d_H_i_s") . ".csv";
+
+        header('Content-Type: text/csv; charset=UTF-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        $output = fopen('php://output', 'w');
+
+        // <<< ДОБАВЛЯЕМ BOM >>>
+        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        // Заголовки CSV
+        $headers = ['Meno zákazníka', 'Email', 'Izba', 'Dátum od', 'Dátum do', 'Stav'];
+        fputcsv($output, $headers, ';');
+
+        // Данные
+        foreach ($reservations as $reservation) {
+            fputcsv($output, [
+                $reservation['user_name'] ?? '---',
+                $reservation['user_email'] ?? '---',
+                $reservation['room_name'] ?? '---',
+                $reservation['check_in'],
+                $reservation['check_out'],
+                $reservation['status']
+            ], ';');
+        }
+
+        fclose($output);
+        exit;
+    }
+
+
 }
