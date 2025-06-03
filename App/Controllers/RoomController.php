@@ -26,7 +26,7 @@ class RoomController extends AControllerBase
     }
 
     // Простая функция для сохранения загруженного файла
-    function saveUploadedFile($file)
+    private function saveUploadedFile($file)
     {
         if (isset($file) && $file['error'] === UPLOAD_ERR_OK) {
             $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
@@ -44,13 +44,50 @@ class RoomController extends AControllerBase
         }
         return '';
     }
+    private function validateRoomData($data, $isEdit = false, $id = null): ?string
+    {
+        if (empty(trim($data['name'] ?? ''))) {
+            return '❌Názov izby je povinný.';
+        }
+
+        $name = trim($data['name']);
+        if (!$isEdit) {
+            if (Room::roomNameExists($name)) {
+                return '❌Izba s takýmto názvom už existuje.';
+            }
+        } else {
+            $stmt = \App\Core\DB\Connection::connect()->prepare(
+                "SELECT COUNT(*) FROM rooms WHERE name = :name AND id != :id"
+            );
+            $stmt->execute(['name' => $name, 'id' => $id]);
+            if ($stmt->fetchColumn() > 0) {
+                return '❌Iná izba už má tento názov.';
+            }
+        }
+
+        if (!is_numeric($data['capacity'] ?? '') || (int)$data['capacity'] <= 0) {
+            return '❌Kapacita musí byť číslo väčšie ako 0.';
+        }
+        if (strlen(trim($data['description'] ?? '')) > 1000) {
+            return '❌Popis nemôže byť dlhší ako 1000 znakov.';
+        }
+        if (!is_numeric($data['price'] ?? '') || (float)$data['price'] <= 0) {
+            return '❌Cena musí byť kladné číslo.';
+        }
+        return null;
+    }
+
     public function create(): Response
     {
         if ($this->request()->getMethod() === 'POST') {
             $data = $this->request()->getPost();
             $files = $this->request()->getFiles();
 
-
+            // валидация
+            $error = $this->validateRoomData($data);
+            if ($error) {
+                return $this->html(['message' => $error]);
+            }
 
             $image1 = $this->saveUploadedFile($files['image1']);
             $image2 = $this->saveUploadedFile($files['image2']);
@@ -85,6 +122,12 @@ class RoomController extends AControllerBase
             $data = $this->request()->getPost();
             $files = $this->request()->getFiles();
 
+            // валидация
+            $error = $this->validateRoomData($data, true, $id);
+            if ($error) {
+                return $this->html(['message' => $error, 'room' => $room]);
+            }
+
             // Сохраняем новые картинки если выбраны
             $image1 = $this->saveUploadedFile($files['image1']);
             $image2 = $this->saveUploadedFile($files['image2']);
@@ -118,4 +161,16 @@ class RoomController extends AControllerBase
         Room::deleteRoom($id);
         return $this->redirect("?c=room");
     }
+
+    public function checkName(): \App\Core\Responses\JsonResponse
+    {
+        $name = trim($this->request()->getValue('name'));
+        if (!$name) {
+            return $this->json(['exists' => false]);
+        }
+
+        $exists = Room::roomNameExists($name);
+        return $this->json(['exists' => $exists]);
+    }
+
 }

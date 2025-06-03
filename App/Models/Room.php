@@ -21,6 +21,12 @@ class Room
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
+    public static function roomNameExists(string $name): bool
+    {
+        $stmt = Connection::connect()->prepare("SELECT COUNT(*) FROM rooms WHERE name = :name");
+        $stmt->execute(['name' => $name]);
+        return $stmt->fetchColumn() > 0;
+    }
     public static function createRoom(string $name, int $capacity, string $description, string $image1, string $image2, string $image3, float $price): bool
     {
         $stmt = Connection::connect()->prepare(

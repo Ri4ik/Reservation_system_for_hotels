@@ -1,11 +1,13 @@
 <main>
     <div class="reservation-form-wrapper">
         <h4>Pridať izbu</h4>
-
-        <form method="post" enctype="multipart/form-data">
-            <div class="back-div">
-                <a href="?c=room" class="back--review">Späť</a>
-            </div>
+        <div class="back-div">
+            <a href="?c=room" class="back--review">Späť</a>
+        </div>
+        <form method="post" enctype="multipart/form-data" data-mode="create">
+            <?php if (!empty($message)) : ?>
+                <p class="validate-error"><?= htmlspecialchars($message) ?></p>
+            <?php endif; ?>
 
             <label>Názov izby:</label>
             <input type="text" name="name" required>
@@ -32,3 +34,4 @@
         </form>
     </div>
 </main>
+<script src="public/js/validation-room.js"></script>
