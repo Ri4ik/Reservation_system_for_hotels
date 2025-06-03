@@ -13,7 +13,9 @@
         <h3>Priemerné hodnotenie: <?= $avgRating ?> ⭐ (<?= $totalVotes ?> hlasov)</h3>
     </div>
     <div class="reviews" id="reviews-list">
+        <div class="create-div">
             <a href="?c=review&a=create" class="create-review">➕ Pridať recenziu</a>
+        </div>
         <?php foreach ($data['reviews'] as $r): ?>
             <div class="review-item" id="review-<?= $r['id'] ?>">
             <p><?= htmlspecialchars($r['comment']) ?></p>

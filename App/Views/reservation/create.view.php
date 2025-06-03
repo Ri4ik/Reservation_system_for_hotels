@@ -2,7 +2,7 @@
     <div class="reservation-form-wrapper">
         <h4>Vytvoriť rezerváciu</h4>
 
-        <div style="margin-bottom: 20px;">
+        <div class="back-div">
             <a href="?c=reservation" class="back--review">Späť na zoznam rezervácií</a>
         </div>
 
@@ -15,7 +15,9 @@
                 <label for="room_id">Izba:</label>
                 <select name="room_id" required>
                     <?php foreach ($data['rooms'] as $room): ?>
-                        <option value="<?= $room['id'] ?>"><?= htmlspecialchars($room['name']) ?></option>
+                        <option value="<?= $room['id'] ?>" <?= ($room['id'] == ($data['selectedRoomId'] ?? '')) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($room['name']) ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
             </div>

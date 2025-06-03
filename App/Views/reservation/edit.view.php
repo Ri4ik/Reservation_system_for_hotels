@@ -2,7 +2,7 @@
     <div class="reservation-form-wrapper">
         <h4>Upraviť rezerváciu</h4>
 
-        <div style="margin-bottom: 20px;">
+        <div class="back-div">
             <a href="?c=reservation" class="back--review">Späť na zoznam rezervácií</a>
         </div>
 

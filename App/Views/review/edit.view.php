@@ -2,7 +2,7 @@
     <div class="review-form-wrapper">
         <h4>Upraviť recenziu</h4>
 
-        <div style="display: flex; justify-content: flex-start; margin-bottom: 20px;">
+        <div class="back-div">
             <a href="?c=review" class="back--review">Späť</a>
         </div>
 

@@ -36,8 +36,14 @@ class ReservationController extends AControllerBase
     public function create(): Response
     {
         $rooms = Room::getAllRooms();
-        return $this->html(['rooms' => $rooms]);
+        $selectedRoomId = $this->request()->getValue('room_id');  // добавляем
+
+        return $this->html([
+            'rooms' => $rooms,
+            'selectedRoomId' => $selectedRoomId
+        ]);
     }
+
 
     public function store(): \App\Core\Responses\Response
     {
