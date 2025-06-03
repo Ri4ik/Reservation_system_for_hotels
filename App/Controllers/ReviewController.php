@@ -24,6 +24,7 @@ class ReviewController extends AControllerBase
     {
         // Якщо не авторизований — перекинути на логін
         if (!$this->app->getAuth()->isLogged()) {
+            $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
             return $this->redirect(\App\Config\Configuration::LOGIN_URL);
         }
 

@@ -27,20 +27,18 @@
             </li>
         </ul>
     </nav>
-
-        <?php if ($auth->isLogged()) { ?>
-            <span class="navbar-text me-2">Prihlásený: <b><?= $auth->getLoggedUserName() ?></b></span>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= $link->url("auth.logout") ?>">Odhlásenie</a>
-                </li>
-            </ul>
-        <?php } else { ?>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= \App\Config\Configuration::LOGIN_URL ?>">Prihlásenie</a>
-                </li>
-            </ul>
-        <?php } ?>
+    </div>
+    <div class="auth-icons">
+        <?php if (isset($_SESSION['user'])): ?>
+            <!-- Если пользователь авторизован, отображаем кнопку выхода -->
+            <a href="?c=auth&a=logout" class="auth-icon">
+                <img src="public/images/logout_70dp_E6D2DC.svg" alt="Logout" />
+            </a>
+        <?php else: ?>
+            <!-- Если пользователь не авторизован, отображаем кнопку входа -->
+            <a href="?c=auth&a=login" class="auth-icon">
+                <img src="public/images/login_70dp_E6D2DC.svg" alt="Login" />
+            </a>
+        <?php endif; ?>
     </div>
 </header>

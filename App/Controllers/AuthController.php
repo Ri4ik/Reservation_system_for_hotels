@@ -34,7 +34,13 @@ class AuthController extends AControllerBase
         if (isset($formData['submit'])) {
             $logged = $this->app->getAuth()->login($formData['login'], $formData['password']);
             if ($logged) {
-                return $this->redirect($this->url("admin.index"));
+                if (isset($_SESSION['redirect_after_login'])) {
+                    $redirectUrl = $_SESSION['redirect_after_login'];
+                    unset($_SESSION['redirect_after_login']);
+                    return $this->redirect($redirectUrl);
+                } else {
+                    return $this->redirect($this->url("home.index")); // дефолт если нет сохраненного URL
+                }
             }
         }
 

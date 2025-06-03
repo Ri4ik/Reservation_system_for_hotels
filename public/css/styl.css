@@ -654,7 +654,8 @@ header {
 
 .auth-icon a {
     text-decoration: none;
-    color: inherit;
+    color: #eafef1;
+    text-shadow: 0 0 4px rgba(144, 238, 144, 0.5);
 }
 
 .auth-icon svg {

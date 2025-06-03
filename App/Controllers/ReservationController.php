@@ -17,6 +17,7 @@ class ReservationController extends AControllerBase
         $currentUser = $_SESSION['user'] ?? null;
 
         if (!$currentUser) {
+            $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
             return $this->redirect("?c=Auth&a=login");
         }
 
