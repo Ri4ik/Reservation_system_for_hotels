@@ -119,11 +119,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `role`) VALUES
-                                                                             (1, 'Admin', 'admin@hotel.com', '+421900000000', 'HASHEDPASS1', 'admin'),
-                                                                             (2, 'Alice', 'alice@example.com', '+421900111111', 'HASHEDPASS2', 'client'),
-                                                                             (3, 'Bob', 'bob@example.com', '+421900222222', 'HASHEDPASS3', 'client'),
-                                                                             (4, 'Daniel', 'daniel@example.com', '+421900333333', 'HASHEDPASS4', 'admin');
-
+                     (1, 'Admin', 'admin@hotel.com', '+421900000000', '$2y$10$WzB7R/1ZHKSl0D7eF49NfuTxoiE8ZMLgFiwvxgHlB/ogBSAaJdxQa', 'admin'),
+                     (2, 'Alice', 'alice@example.com', '+421900111111', '$2y$10$alicepassHASH...', 'client'),
+                     (3, 'Bob', 'berezok.2002@gmail.com1', '+421900222222', '$2y$10$d3UvGOJaBKkMnBHcJBZkMufFXdQlank2xB.xTsK8aAqX99vm6urT6', 'client'),
+                     (4, 'Danyil Berezhnyi', 'berezok.2002@gmail.com', '0970056404', '$2y$10$d3UvGOJaBKkMnBHcJBZkMufFXdQlank2xB.xTsK8aAqX99vm6urT6', 'admin'),
+                     (8, 'TORT', 'TORT@gmail.com', '0970056404', '$2y$10$V.JCCjLKlAfyj8tdCL1Qd.7wCLp5i9pRXdUBsZkY2ukhpbzpsNFxG', 'client');
 -- --------------------------------------------------------
 
 -- Indexy a kľúče

@@ -1,27 +1,109 @@
-# O tomto frameworku
+# Rezervačný systém hotelových izieb
 
-Tento framework vznikol na podporu výučby predmetu Vývoj aplikácií pre intranet a intrenate (VAII)
-na [Fakulte informatiky a riadenia](https://www.fri.uniza.sk/) [Žilinskej univerzity v Žiline](https://www.uniza.sk/). Framework je navrhnutý tak, aby bol čo
-najmenší a najjednoduchší.
+Tento projekt je webová aplikácia pre správu hotelových rezervácií. Bol vytvorený v rámci predmetu VAII na FRI ŽU v Žiline.
 
-# Návod a dokumentácia
+---
 
-Kód frameworku je kompletne okomentovaný. V prípade, že na pochopenie potrebujete dodatočné informácie,
-navštívte [WIKI stránky](https://github.com/thevajko/vaiicko/wiki).
+## 📦 Použité technológie
 
-# Docker
+- PHP 8.x
+- MySQL (MariaDB)
+- XAMPP
+- Čistý MVC framework (VAIICKO)
+- HTML / CSS / JavaScript (vrátane AJAX)
+- phpMyAdmin
 
-Framework ma v adresári `<root>/docker` základnú konfiguráciu pre spustenie a debug web aplikácie. Všetky potrebné služby sú v `docker-compose.yml`. Po ich spustení sa vytvorí:
+---
 
-- __WWW document root__ je nastavený adresár riešenia, čiže web bude dostupný na adrese [http://localhost/](http://localhost/). Server má pridaný modul pre
-  ladenie móde" (`xdebug.start_with_request=yes`).
-- webový server beží na __PHP 8.2__ s [__Xdebug 3__](https://xdebug.org/) nastavený na port __9003__ v "auto-štart" móde
-- PHP ma doinštalované rozšírenie __PDO__
-- databázový server s vytvorenou _databázou_ a tabuľkami `messages` a `users` na porte __3306__ a bude dostupný na `localhost:3306`. Prihlasovacie údaje sú:
-    - MYSQL_ROOT_PASSWORD: db_user_pass
-    - MYSQL_DATABASE: databaza
-    - MYSQL_USER: db_user
-    - MYSQL_PASSWORD: db_user_pass
-- phpmyadmin server, ktorý sa automatický nastavený na databázový server na porte __8080__ a bude dostupný na
-  adrese [http://localhost:8080/](http://localhost:8080/)
+## 🖥️ Inštalácia na lokálnom PC (bez Dockeru, pomocou XAMPP)
 
+### 1️⃣ Naklonovanie projektu
+
+- Skopírujte celý projekt do hlavného adresára XAMPP:
+
+ C:\xampp\htdocs\Rezervacny_System_VAII
+
+---
+
+### 2️⃣ Spustenie XAMPP
+
+- Spustite **XAMPP Control Panel**.
+- Najprv spustite **Apache**.
+- Potom spustite **MySQL**.
+
+> ❗ Ak MySQL nespustí kvôli obsadenému portu 3306:
+
+- Otvorte CMD ako administrátor.
+- Zadajte:
+
+netstat -aon | findstr :3306
+
+- Zobrazí sa PID procesu, ktorý blokuje port. Napríklad:
+
+TCP 0.0.0.0:3306 0.0.0.0:0 LISTENING 1234
+
+- Ukončite proces zadaním:
+
+taskkill /PID 1234 /F
+
+- Spustite MySQL znova.
+
+---
+
+### 3️⃣ Import databázy
+
+- Otvorte phpMyAdmin:  
+  http://localhost/phpmyadmin
+
+- Vytvorte novú databázu:
+
+  booking_rooms
+
+- Prejdite do SQL sekcie a vložte tam obsah súboru:
+
+docker/sql/booking_rooms_schema.sql
+
+- Spustite skript.
+
+---
+
+### 4️⃣ Spustenie aplikácie
+
+Po úspešnom importe databázy spustite aplikáciu v prehliadači:
+
+http://localhost/Rezervacny_System_VAII/
+
+---
+
+## 🔐 Preddefinované účty:
+
+- **Admin:**
+  - Email: `berezok.2002@gmail.com`
+  - Heslo: 111111
+
+- **Klienti:**
+  - Možnosť registrácie cez aplikáciu.
+  - alebo:
+  - Email: `berezok.2002@gmail.com1`
+  - Heslo: 111111
+---
+
+## 📂 Štruktúra projektu
+
+- `App/Controllers` – Logika kontrolérov
+- `App/Models` – Prístup k databáze
+- `App/Views` – Šablóny pre frontend
+- `public/` – Statické súbory (CSS, JS, obrázky)
+- `docker/sql/booking_rooms_schema.sql` – Kompletný SQL dump databázy
+
+---
+
+## ⚠️ Poznámka
+
+- Projekt je optimalizovaný na spúšťanie pod XAMPP.
+- Docker konfigurácia nie je nutná pre túto inštaláciu.
+
+---
+
+Vypracoval:  
+**Danyil Berezhnyi**
