@@ -39,4 +39,4 @@
         <?php endforeach; ?>
     </div>
 </main>
-<script src="/Rezervacny_System_VAII/public/js/review-actions.js"></script>
+<script src="public/js/review-actions.js"></script>

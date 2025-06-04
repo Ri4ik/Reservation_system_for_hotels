@@ -23,7 +23,7 @@ class Configuration
     public const DB_HOST = 'localhost';  // see docker/docker-compose.yml
     public const DB_NAME = 'booking_rooms'; // see docker/.env
     public const DB_USER = 'root'; // see docker/.env
-    public const DB_PASS = '1234'; // see docker/.env
+    public const DB_PASS = ''; // see docker/.env
 
     /**
      * URL where main page logging is. If action needs login, user will be redirected to this url

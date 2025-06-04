@@ -107,4 +107,4 @@
 <script>
     const IS_ADMIN = <?= $isAdmin ? 'true' : 'false' ?>;
 </script>
-<script src="/Rezervacny_System_VAII/public/js/reservation-actions.js"></script>
+<script src="public/js/reservation-actions.js"></script>
