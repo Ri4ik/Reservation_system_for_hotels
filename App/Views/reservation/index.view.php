@@ -99,7 +99,7 @@
         </tr>
         </thead>
         <tbody id="reservation-table-body">
-        <!-- Будет динамически наполняться через AJAX -->
+        <!-- Bude dynamicky doplnené pomocou AJAX -->
         </tbody>
     </table>
 </main>

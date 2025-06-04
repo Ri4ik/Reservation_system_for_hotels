@@ -78,23 +78,19 @@ tr:hover {
     background-color: rgba(240, 100, 100, 0.4);
 }
 
-
-
-
-
 /*status rezervacie*/
 .status-pending {
-    background-color: rgb(243, 246, 244); /* серый тусклый */
+    background-color: rgb(243, 246, 244);
 }
 
 .status-confirmed {
-    background-color: rgba(158, 237, 157, 0.5); /* зелёный тусклый */
+    background-color: rgba(158, 237, 157, 0.5);
 }
 
 .status-cancelled {
-    background-color: rgba(241, 145, 145, 0.5); /* красный тусклый */
+    background-color: rgba(241, 145, 145, 0.5);
 }
-/* Новая адаптивная сетка для фильтров */
+/* Nová adaptívna mriežka pre filtre */
 
 .search-form-wrapper {
     display: flex;
@@ -158,18 +154,15 @@ tr:hover {
 .swiper-slide {
     background-position: center;
     background-size: cover;
-    /*width: 300px;*/
-    /*height: 300px;*/
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     transform: scale(0.7);
-    /*opacity: 0.5;*/
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 .swiper-slide-active {
-    transform: scale(1.15); /* делает центральную больше */
+    transform: scale(1.15);
 }
 
 .swiper-slide img {
@@ -190,7 +183,7 @@ tr:hover {
 
 @media (max-width: 768px) {
     .swiper-slide {
-        transform: scale(0.6); /* уменьшенные превью по бокам */
+        transform: scale(0.6);
     }
 
     .swiper-slide-active {
@@ -199,7 +192,7 @@ tr:hover {
 
     .swiper-slide-active img {
         height: 50vh;
-        min-width: 50vw; /* минимум 66% от 50vh → гарантирует хорошее соотношение */
+        min-width: 50vw;
     }
     .form-background {
         min-height: 50vh;
@@ -210,8 +203,8 @@ tr:hover {
 
 /*forms start*/
 .validate-error {
-    background-color: rgba(255, 255, 255, 0.95); /* майже білий, щоб контрастувати з фоном */
-    color: #b00020; /* темно-червоний текст */
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #b00020;
     padding: 12px 16px;
     border: 4px solid #b00020;
     border-radius: 6px;
@@ -301,15 +294,14 @@ tr:hover {
     text-decoration: underline;
 }
 /*forms end*/
-/* Обертка для формы */
+/* Obal pre formulár */
 #search-form {
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Выравниваем по правому краю */
-    /*margin-top: 20px;*/
+    align-items: flex-end;
 }
 
-/* Текст над формой */
+/* Text nad formulárom */
 #search-form p {
     font-size: 20px;
     color: #333;
@@ -317,22 +309,22 @@ tr:hover {
     margin-bottom: 10px;
     text-align: start;
 }
-/* Поля ввода */
+/* Vstupné polia */
 #search-form input {
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
-    width: 250px; /* Можно настроить ширину */
+    width: 250px;
 }
 
-/* Добавим небольшое оформление */
+/* Pridajme nejakú dekoráciu */
 #search-author {
     margin-bottom: 5px;
 }
 
-/* Если нужно добавить границу или тень */
+/* Ak potrebujete pridať orámovanie alebo tieň */
 #search-form input:focus {
     border-color: #4CAF50;
     outline: none;
@@ -372,30 +364,30 @@ tr:hover {
     }
 }
 
-/* Стиль для полосы прокрутки */
+/* Štýl pre posuvník */
 table::-webkit-scrollbar {
-    height: 8px; /* Сделаем полосу прокрутки чуть толще */
+    height: 8px; /* Urobme posuvník trochu hrubší */
 }
 
 table::-webkit-scrollbar-thumb {
-    background-color: #7c4dff; /* Цвет ползунка */
+    background-color: #7c4dff;  /* Farba posuvníka */
     border-radius: 5px;
 }
 
 table::-webkit-scrollbar-track {
-    background-color: #f5f5f5; /* Светлый фон полосы прокрутки */
+    background-color: #f5f5f5; /* Svetlé pozadie posuvníka */
 }
 
-/* Мобильная таблица, улучшение */
+/* Mobilný stôl, vylepšenie */
 @media (max-width: 600px) {
     table {
-        font-size: 10px; /* Еще меньше шрифт для маленьких экранов */
+        font-size: 10px; /* Ešte menšie písmo pre malé obrazovky */
     }
 }
 
 .about-text {
     flex: 1;
-    max-width: 50%; /* Занимает половину экрана на больших экранах */
+    max-width: 50%; /* Zaberá polovicu obrazovky na veľkých obrazovkách */
     font-size: 18px;
     line-height: 1.6;
     color: #333;
@@ -403,7 +395,7 @@ table::-webkit-scrollbar-track {
     text-align: justify;
 }
 
-/* Заголовок */
+/* Hlavička */
 .about-text h2 {
     font-size: 28px;
     font-weight: bold;
@@ -411,7 +403,7 @@ table::-webkit-scrollbar-track {
     margin-bottom: 20px;
 }
 
-/* Параграф */
+/* Odsek */
 .about-text p {
     font-size: 16px;
     line-height: 1.8;
@@ -419,16 +411,16 @@ table::-webkit-scrollbar-track {
     margin-bottom: 10px;
 }
 
-/*📱 Адаптация под мобильные экраны*/
+/* Prispôsobenie pre mobilné obrazovky*/
 @media (max-width: 900px) {
     .about-text {
-        max-width: 100%; /* Полная ширина на узких экранах */
+        max-width: 100%;
         text-align: left;
     }
 }
 
 .gallery {
-    flex: 1; /* Занимает 50% ширины */
+    flex: 1;/* Zaberá 50 % šírky */
     display: flex;
     justify-content: center;
     gap: 40px;
@@ -446,13 +438,13 @@ table::-webkit-scrollbar-track {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px; /* Расстояние между изображениями */
+    gap: 10px; /* Vzdialenosť medzi obrázkami */
     padding: 10px;
 }
 
 .examples-gallery figure {
     text-align: center;
-    max-width: 300px; /* Максимальная ширина фото */
+    max-width: 300px; /* Maximálna šírka fotografie */
 }
 
 .examples-gallery img {
@@ -472,11 +464,11 @@ table::-webkit-scrollbar-track {
 
 .review-actions {
     display: flex;
-    flex-wrap: wrap; /* <-- Ключове! */
+    flex-wrap: wrap;
     gap: 10px;
     margin-top: 10px;
 }
-/* Стиль для кнопки Späť */
+/* Štýl pre tlačidlo Späť */
 .back--review {
     display: inline-block;
     margin-bottom: 20px;
@@ -514,7 +506,7 @@ table::-webkit-scrollbar-track {
     box-shadow: 0 6px 12px rgba(104, 159, 56, 0.5);
 }
 
-/* Розширене текстове поле */
+/* Rozšírené textové pole */
 textarea[name="comment"], textarea[name="content"] {
     width: 100%;
     min-height: 6em;
@@ -641,14 +633,13 @@ textarea[name="comment"], textarea[name="content"] {
 .wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* обов'язково! */
+    min-height: 100vh;
 }
 
 
 header {
     background-image: url('../images/header.jpg');
     background-size: cover;
-    /*background-size: auto 100%;*/
     background-position: center;
     background-repeat: no-repeat;
     background-color: black;
@@ -683,24 +674,21 @@ header {
 }
 
 
-/* Глобальные стили для всей страницы */
+/* Globálne štýly pre celú stránku */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    /*display: flex;*/
     flex-direction: column;
 }
 
-/* Контентная часть занимает всю доступную высоту */
+/* Obsahová časť zaberá celú dostupnú výšku */
 .main-content {
     flex: 1;
-    /*padding: 20px;*/
 }
 
 
 main {
-    /*background-image: url('../images/header.jpg');*/
     flex: 1;
     padding: 20px;
     display: flex;
@@ -719,7 +707,6 @@ h4 {
     font-size: 2em;
     color: #000000;
     text-align: center;
-    /*padding: 20px 0;*/
 }
 .price-list {
     background-color: #f4f4f4;
@@ -793,10 +780,7 @@ nav ul li a {
 
 .reviews {
     background-color: #f9f9f9;
-
-    /*background-color: #c50f0f;*/
     padding: 40px;
-    /*padding-bottom: 20px;*/
     border-radius: 10px;
     margin-top: 40px;
 }
@@ -818,10 +802,10 @@ nav ul li a {
 }
 .review-time {
     text-align: right;
-    font-size: 10px;         /* Уменьшенный размер шрифта */
-    color: #888;              /* Светло-серый цвет */
-    font-style: italic;       /* Курсивный текст */
-    margin-top: 5px;          /* Небольшой отступ сверху */
+    font-size: 10px;
+    color: #888;
+    font-style: italic;
+    margin-top: 5px;
     margin-bottom: 5px;
 }
 .review-item:hover {
@@ -862,7 +846,6 @@ nav ul li a {
     display: flex;
     margin-top: 20px;
     border-radius: 8px;
-    /*overflow: hidden;*/
     height: 100%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -894,7 +877,7 @@ input, select, button {
 }
 
 select {
-    appearance: none; /* Убираем стандартный вид выпадающего списка */
+    appearance: none; /* Odstrániť štandardné zobrazenie rozbaľovacieho zoznamu */
     background-color: white;
     cursor: pointer;
 }
@@ -905,7 +888,7 @@ select:focus, input:focus {
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
-/* Стили для кнопки */
+/* Štýly pre tlačidlo */
 button {
     padding: 10px;
     background-color: #2f075e;
@@ -924,7 +907,7 @@ button:active {
     background-color: #2f075e;
 }
 
-/* Стили для общего вида */
+/* Štýly pre celkový vzhľad */
 input[type="text"], input[type="date"], input[type="time"], select {
     padding: 8px;
     font-size: 16px;
@@ -935,12 +918,11 @@ input[type="text"], input[type="date"], input[type="time"], select {
 
 footer {
     background-image: url('../images/header.jpg');
-    background-size: cover; /* Сделает изображение полноэкранным */
+    background-size: cover;
     background-position: bottom;
     color: #fff;
     text-align: center;
     padding: 20px;
-    /*position: relative;*/
     font-family: 'Arial', sans-serif;
 
 }
@@ -1045,8 +1027,10 @@ ul {
 .example-2 .icon-content a[data-social="telegram"] ~ .tooltip {
     background-color: #0088cc;
 }
+/*Button Social*/
+/* From Uiverse.io by david-mohseni END*/
 
-/* Обёртка формы создания и редактирования резервации */
+/* Obal na vytvorenie a úpravu rezervačného formulára */
 .reservation-form-wrapper {
     background: rgba(255, 255, 255, 0.85);
     border-radius: 16px;
@@ -1056,7 +1040,7 @@ ul {
     margin: 0 auto;
 }
 
-/* Заголовок формы */
+/* Názov formulára */
 .reservation-form-wrapper h4 {
     font-size: 1.8em;
     font-weight: 600;
@@ -1065,13 +1049,12 @@ ul {
     color: #2f075e;
 }
 
-/* Блоки с полями */
+/* Bloky s poľami */
 .reservation-form-wrapper form div {
-    /*width: 90%;*/
     margin-bottom: 20px;
 }
 
-/* Лейблы */
+/* Štítky */
 .reservation-form-wrapper label {
     display: block;
     font-weight: bold;
@@ -1079,7 +1062,7 @@ ul {
     color: #2f075e;
 }
 
-/* Инпуты и селекты */
+/* Vstupy a výbery */
 .reservation-form-wrapper input[type="text"],
 .reservation-form-wrapper input[type="date"],
 .reservation-form-wrapper select {
@@ -1099,7 +1082,7 @@ ul {
     outline: none;
 }
 
-/* Кнопка сабмита (в твоём общем стиле create-review) */
+/* Tlačidlo Odoslať */
 .reservation-form-wrapper button[type="submit"] {
     display: inline-block;
     padding: 14px 24px;
@@ -1145,7 +1128,7 @@ ul {
     }
 
     tr {
-        margin: 10px auto; /* по центру */
+        margin: 10px auto;
         background: rgba(255, 255, 255, 0.95);
         border-radius: 16px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.15);
@@ -1205,7 +1188,6 @@ ul {
     margin: 0 auto;
 }
 
-/* Заголовок формы */
 .review-form-wrapper h4 {
     font-size: 1.8em;
     font-weight: 600;
@@ -1214,12 +1196,10 @@ ul {
     color: #2f075e;
 }
 
-/* Блоки с полями */
 .review-form-wrapper form div {
     margin-bottom: 20px;
 }
 
-/* Лейблы */
 .review-form-wrapper label {
     display: block;
     font-weight: bold;
@@ -1227,7 +1207,6 @@ ul {
     color: #2f075e;
 }
 
-/* Поля ввода */
 .review-form-wrapper textarea,
 .review-form-wrapper select {
     width: 100%;
@@ -1246,7 +1225,6 @@ ul {
     outline: none;
 }
 
-/* Кнопка сабмита */
 .review-form-wrapper button[type="submit"] {
     display: inline-block;
     padding: 14px 24px;
@@ -1307,11 +1285,9 @@ ul {
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
-    /*margin-top: 20px;*/
 }
 
 .room-card {
-    /*background: rgba(255, 255, 255, 0.9);*/
     border-radius: 16px;
     box-shadow: 0 6px 16px rgba(0,0,0,0.15);
     width: 300px;

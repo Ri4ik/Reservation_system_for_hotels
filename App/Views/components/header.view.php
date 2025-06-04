@@ -4,9 +4,6 @@
 ?>
 <header>
     <div class="container-fluid">
-<!--        <a class="navbar-brand" href="--><?php //= $link->url("home.index") ?><!--">-->
-<!--            <img src="public/images/vaiicko_logo.png" alt="Logo" title="--><?php //= \App\Config\Configuration::APP_NAME ?><!--">-->
-<!--        </a>-->
         <h1>Hotel Forest Paradise</h1>
     <nav>
         <ul class="navbar-nav me-auto">
@@ -30,12 +27,12 @@
     </div>
     <div class="auth-icons">
         <?php if (isset($_SESSION['user'])): ?>
-            <!-- Если пользователь авторизован, отображаем кнопку выхода -->
+            <!-- Ak je používateľ prihlásený, zobraziť tlačidlo na odhlásenie -->
             <a href="?c=auth&a=logout" class="auth-icon">
                 <img src="public/images/logout_70dp_E6D2DC.svg" alt="Logout" />
             </a>
         <?php else: ?>
-            <!-- Если пользователь не авторизован, отображаем кнопку входа -->
+            <!-- Ak používateľ nie je prihlásený, zobraziť tlačidlo prihlásenia -->
             <a href="?c=auth&a=login" class="auth-icon">
                 <img src="public/images/login_70dp_E6D2DC.svg" alt="Login" />
             </a>

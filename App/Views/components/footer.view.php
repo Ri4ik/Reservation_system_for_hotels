@@ -1,6 +1,4 @@
 <footer>
-<!--    <link rel="stylesheet" href="../../../public/css/styl.css">-->
-    <!--    <h3>Naše sociálne siete</h3>-->
     <ul class="example-2">
         <li class="icon-content">
             <a
@@ -27,7 +25,7 @@
         </li>
         <li class="icon-content">
             <a
-                    href="https://www.instagram.com/snezhinka_lashes/"
+                    href="https://www.instagram.com/"
                     aria-label="Instagram"
                     data-social="instagram"
             >

@@ -43,7 +43,6 @@
     <div class="row">
         <div class="col mt-5 text-center">
             <h2>Vitajte v Hotel Forest Paradise</h2>
-<!--            <img src="public/images/vaiicko_logo.png" alt="Logo hotela" style="max-width: 180px; margin: 20px 0;">-->
             <p class="lead">
                 Luxus uprostred prírody – oddýchnite si v objatí lesa.
             </p>
