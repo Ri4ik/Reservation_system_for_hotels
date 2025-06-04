@@ -22,14 +22,14 @@ class ReviewController extends AControllerBase
 
     public function create(): \App\Core\Responses\Response
     {
-        // Якщо не авторизований — перекинути на логін
+        // Ak nie ste autorizovaný/á - presmerujte na prihlásenie
         if (!$this->app->getAuth()->isLogged()) {
             $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
             return $this->redirect(\App\Config\Configuration::LOGIN_URL);
         }
 
         if ($this->request()->isPost()) {
-            $userId = $this->app->getAuth()->getLoggedUserId(); // точно буде int
+            $userId = $this->app->getAuth()->getLoggedUserId();
             $content = $this->request()->getValue('comment');
             $rating = (int) $this->request()->getValue('rating');
             if (trim($content ?? '') === '') {
@@ -95,36 +95,13 @@ class ReviewController extends AControllerBase
         $author = $this->request()->getValue('author');
         $date = $this->request()->getValue('date');
 
-        $results = [];
+        $results = Review::search($author, $date);
 
-        $pdo = \App\Core\DB\Connection::connect();
-
-        $sql = "SELECT r.*, u.name AS user_name 
-            FROM reviews r 
-            JOIN users u ON r.user_id = u.id 
-            WHERE 1=1";
-
-        $params = [];
-
-        if (!empty($author)) {
-            $sql .= " AND u.name LIKE :author";
-            $params['author'] = '%' . $author . '%';
-        }
-
-        if (!empty($date)) {
-            $sql .= " AND DATE(r.created_at) = :date";
-            $params['date'] = $date;
-        }
-
-        $sql .= " ORDER BY r.created_at DESC";
-
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($params);
-        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($results as &$row) {
             $row['is_admin'] = $isAdmin;
             $row['is_logged'] = $isLogged;
         }
+
         $all = Review::getAll();
         $avgRating = count($all) ? round(array_sum(array_column($all, 'rating')) / count($all), 2) : 0;
         $totalVotes = count(array_filter(array_column($all, 'rating')));
@@ -135,5 +112,6 @@ class ReviewController extends AControllerBase
             'total' => $totalVotes
         ]);
     }
+
 
 }

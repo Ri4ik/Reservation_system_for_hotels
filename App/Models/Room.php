@@ -64,13 +64,13 @@ class Room
 
     public static function deleteRoom(int $id): bool
     {
-        // Сначала получаем саму запись, чтобы знать имена файлов
+        // Najprv získame samotný záznam, aby sme poznali názvy súborov
         $stmt = Connection::connect()->prepare("SELECT image1, image2, image3 FROM rooms WHERE id = :id");
         $stmt->execute(['id' => $id]);
-        $room = $stmt->fetch(PDO::FETCH_ASSOC);
+        $room = $stmt->fetch(PDO::FETCH_ASSOC); //Associative Array  ['column1' => value1, ...]
 
         if ($room) {
-            // Удаляем файлы, если они существуют
+            // Odstránenie súborov, ak existujú
             foreach (['image1', 'image2', 'image3'] as $field) {
                 if (!empty($room[$field])) {
                     $path = 'public/images/' . $room[$field];
@@ -81,9 +81,10 @@ class Room
             }
         }
 
-        // Теперь удаляем запись из базы
+        // Teraz vymažeme záznam z databázy
         $stmtDelete = Connection::connect()->prepare("DELETE FROM rooms WHERE id = :id");
         return $stmtDelete->execute(['id' => $id]);
+        //Z dôvodu funkcie ON DELETE CASCADE v databáze budú všetky rezervácie týkajúce sa tejto izby automaticky vymazané.
     }
 
 }

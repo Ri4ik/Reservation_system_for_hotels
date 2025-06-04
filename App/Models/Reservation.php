@@ -15,7 +15,7 @@ class Reservation extends Model
     protected string $check_out;
     protected string $status;
 
-    // Стандартні гетери і сеттери
+    // Štandardné metódy getter a setter
     public function getId(): int { return $this->id; }
     public function getUserId(): int { return $this->user_id; }
     public function setUserId(int $user_id): void { $this->user_id = $user_id; }
@@ -32,13 +32,13 @@ class Reservation extends Model
     public function getStatus(): string { return $this->status; }
     public function setStatus(string $status): void { $this->status = $status; }
 
-    // Таблиця у БД
+
     public static function getTableName(): string
     {
         return 'reservations';
     }
 
-    // Завантажити всі резервації з даними користувача і кімнати (адміну)
+    // Načítanie všetkých rezervácií s údajmi o používateľoch a izbách (admin)
     public static function getAllWithUsersAndRooms(): array
     {
         $db = Connection::connect();
@@ -53,7 +53,7 @@ class Reservation extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Завантажити резервації певного користувача з назвами кімнат
+    // Načítanie rezervácií konkrétneho používateľa s názvami izieb
     public static function getByUserIdWithRoom(int $userId): array
     {
         $db = Connection::connect();
@@ -67,15 +67,6 @@ class Reservation extends Model
         $stmt->execute([':uid' => $userId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    // Отримати тип кімнати (тільки якщо є в масиві)
-    public function getRoomName(): ?string {
-        return $this->room_name ?? null;
-    }
-
-    public function getUserName(): ?string {
-        return $this->user_name ?? null;
-    }
     public static function searchReservations(
         bool $isAdmin,
         ?int $currentUserId,
@@ -88,7 +79,7 @@ class Reservation extends Model
     {
         $db = Connection::connect();
 
-        // Базовый SELECT
+        // Základný SELECT
         $sql = "
         SELECT r.*, u.name AS user_name, u.email AS user_email, rm.name AS room_name
         FROM reservations r
@@ -99,19 +90,19 @@ class Reservation extends Model
 
         $params = [];
 
-        // Если не админ — всегда фильтруем по своему userId
+        // Ak nie ste administrátor, vždy filtrujte podľa vášho ID používateľa
         if (!$isAdmin) {
             $sql .= " AND r.user_id = :uid";
             $params[':uid'] = $currentUserId;
         } else {
-            // Для админа — если передан фильтр по имени пользователя
+            // Pre administrátora - ak je odovzdaný filter podľa používateľského mena
             if (!empty($userName)) {
                 $sql .= " AND u.name LIKE :user";
                 $params[':user'] = "%$userName%";
             }
         }
 
-        // Общие фильтры
+        // Spoločné filtre
         if (!empty($roomName)) {
             $sql .= " AND rm.name LIKE :room";
             $params[':room'] = "%$roomName%";
@@ -155,7 +146,7 @@ class Reservation extends Model
             ':dateTo' => $dateTo
         ];
 
-        // Если редактируем — исключаем текущую резервацию из проверки
+        // Ak upravíme, vylúčime aktuálnu rezerváciu z kontroly
         if ($excludeReservationId !== null) {
             $sql .= " AND id != :excludeId";
             $params[':excludeId'] = $excludeReservationId;
@@ -179,7 +170,8 @@ class Reservation extends Model
         $stmt->execute(['room_id' => $roomId]);
 
         $unavailableDates = [];
-
+        //Prejdeme si všetky riadky (rezervácie), v ktorom si prejdeme každý dátum v intervale od príchodu do odchodu
+        // Každý deň pridáme do poľa ako riadok v tvare 2024-06-09
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $start = new \DateTime($row['check_in']);
             $end = new \DateTime($row['check_out']);

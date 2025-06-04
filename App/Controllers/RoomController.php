@@ -11,7 +11,6 @@ class RoomController extends AControllerBase
     public function index(): Response
     {
         $rooms = Room::getAllRooms();
-//        print_r(Room::getAllRooms());
         return $this->html(['rooms' => $rooms]);
     }
     public function checkRoom(): \App\Core\Responses\JsonResponse
@@ -25,7 +24,7 @@ class RoomController extends AControllerBase
         return $this->json(['exists' => $room !== null]);
     }
 
-    // Простая функция для сохранения загруженного файла
+    // Jednoduchá funkcia na uloženie stiahnutého súboru
     private function saveUploadedFile($file)
     {
         if (isset($file) && $file['error'] === UPLOAD_ERR_OK) {
@@ -33,7 +32,7 @@ class RoomController extends AControllerBase
             $allowed = ['jpg', 'jpeg', 'png', 'webp'];
 
             if (!in_array(strtolower($ext), $allowed)) {
-                return ''; // Файл не допустимого типа
+                return ''; // Typ súboru nie je platný
             }
 
             $filename = uniqid() . '.' . $ext;
@@ -79,11 +78,11 @@ class RoomController extends AControllerBase
 
     public function create(): Response
     {
-        if ($this->request()->getMethod() === 'POST') {
+        if ($this->request()->isPost()) {
             $data = $this->request()->getPost();
             $files = $this->request()->getFiles();
 
-            // валидация
+            // validácia
             $error = $this->validateRoomData($data);
             if ($error) {
                 return $this->html(['message' => $error]);
@@ -118,22 +117,22 @@ class RoomController extends AControllerBase
             return $this->redirect("?c=room");
         }
 
-        if ($this->request()->getMethod() === 'POST') {
+        if ($this->request()->isPost()) {
             $data = $this->request()->getPost();
             $files = $this->request()->getFiles();
 
-            // валидация
+            // validácia
             $error = $this->validateRoomData($data, true, $id);
             if ($error) {
                 return $this->html(['message' => $error, 'room' => $room]);
             }
 
-            // Сохраняем новые картинки если выбраны
+            // Uložiť nové obrázky, ak je vybratá možnosť
             $image1 = $this->saveUploadedFile($files['image1']);
             $image2 = $this->saveUploadedFile($files['image2']);
             $image3 = $this->saveUploadedFile($files['image3']);
 
-            // Если файл не загружен — берём старую картинку из hidden поля
+            // Ak súbor nie je načítaný, vezmeme starý obrázok zo skrytého poľa
             if (!$image1) $image1 = $data['existing_image1'] ?? '';
             if (!$image2) $image2 = $data['existing_image2'] ?? '';
             if (!$image3) $image3 = $data['existing_image3'] ?? '';

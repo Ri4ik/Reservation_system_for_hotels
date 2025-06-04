@@ -49,6 +49,33 @@ class Review
             'comment' => $content
         ]);
     }
+    public static function search(?string $author, ?string $date): array
+    {
+        $pdo = \App\Core\DB\Connection::connect();
+
+        $sql = "SELECT r.*, u.name AS user_name 
+            FROM reviews r 
+            JOIN users u ON r.user_id = u.id 
+            WHERE 1=1";
+
+        $params = [];
+
+        if (!empty($author)) {
+            $sql .= " AND u.name LIKE :author";
+            $params['author'] = '%' . $author . '%';
+        }
+
+        if (!empty($date)) {
+            $sql .= " AND DATE(r.created_at) = :date";
+            $params['date'] = $date;
+        }
+
+        $sql .= " ORDER BY r.created_at DESC";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
     public static function deleteById(int $id): bool
     {
         $stmt = Connection::connect()->prepare("DELETE FROM reviews WHERE id = :id");

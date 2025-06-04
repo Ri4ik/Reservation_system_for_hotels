@@ -36,7 +36,7 @@ class ReservationController extends AControllerBase
     public function create(): Response
     {
         $rooms = Room::getAllRooms();
-        $selectedRoomId = $this->request()->getValue('room_id');  // добавляем
+        $selectedRoomId = $this->request()->getValue('room_id');  // pridávame
 
         return $this->html([
             'rooms' => $rooms,
@@ -56,7 +56,7 @@ class ReservationController extends AControllerBase
 
         $today = date('Y-m-d');
         $room = Room::getRoomByID($roomId);
-        // Валидация данных
+        // Validacia údajov
         if (!$room) {
             $message = '❌Zvolená izba neexistuje.';
         } elseif (empty($roomId) || empty($dateFrom) || empty($dateTo)) {
@@ -132,7 +132,6 @@ class ReservationController extends AControllerBase
             return $this->redirect("?c=reservation");
         }
 
-//        return $this->html($message);
         $rooms = Room::getAllRooms();
         return $this->html([
             'reservation' => $reservation,
@@ -143,7 +142,6 @@ class ReservationController extends AControllerBase
 
     public function confirm(): \App\Core\Responses\JsonResponse
     {
-        // Проверка прав через централизованный Auth
         if (!$this->app->getAuth()->isAdmin()) {
             return $this->json(['success' => false, 'message' => 'Unauthorized']);
         }
@@ -269,17 +267,20 @@ class ReservationController extends AControllerBase
         $filename = "rezervacie_" . date("Y_m_d_H_i_s") . ".csv";
 
         header('Content-Type: text/csv; charset=UTF-8');
+        //Content-Disposition: zabezpečuje, že prehliadač ponúkne súbor na stiahnutie s generovaným názvom.
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         $output = fopen('php://output', 'w');
 
-        // <<< ДОБАВЛЯЕМ BOM >>>
+        // PRIDÁVANIE BOM
+        //BOM = Byte Order Mark — sekvencia bajtov na začiatku súboru.
+        //BOM sa pridáva, aby Microsoft Excel správne rozpoznal, že CSV je v UTF-8 a nezobrazoval pokazené znaky (diakritiku).
         fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
 
-        // Заголовки CSV
+        // Hlavičky CSV
         $headers = ['Meno zákazníka', 'Email', 'Izba', 'Dátum od', 'Dátum do', 'Stav'];
         fputcsv($output, $headers, ';');
 
-        // Данные
+        // Dáta
         foreach ($reservations as $reservation) {
             fputcsv($output, [
                 $reservation['user_name'] ?? '---',

@@ -51,6 +51,11 @@ class User extends Model
     {
         $stmt = Connection::connect()->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
         $stmt->execute(['email' => $email]);
+        //PDO::FETCH_CLASS — pri vykonávaní fetch() sa vytvorí objekt zadanej triedy (self::class - User).
+        //Naplní jeho polia hodnotami z výsledku dotazu
+        //PDO::FETCH_PROPS_LATE — ovplyvňuje poradie vyplnenia:
+        //Najprv sa zavolá konštruktor objektu.
+        //Potom PDO dosadí vlastnosti z výsledku dotazu.
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, self::class);
         return $stmt->fetch() ?: null;
     }

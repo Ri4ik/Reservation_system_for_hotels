@@ -39,7 +39,7 @@ class AuthController extends AControllerBase
                     unset($_SESSION['redirect_after_login']);
                     return $this->redirect($redirectUrl);
                 } else {
-                    return $this->redirect($this->url("home.index")); // дефолт если нет сохраненного URL
+                    return $this->redirect($this->url("home.index")); // predvolené, ak nie je uložená žiadna URL adresa
                 }
             }
         }
