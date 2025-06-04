@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
+
     const authorInput = document.getElementById('search-author');
     const dateInput = document.getElementById('search-date');
 
-    // Глобальна функція — доступна для видалення
+    // Globálna funkcia na vyhľadávanie recenzií (bude sa volať pri filtrovaní alebo po vymazaní)
     window.searchReviews = function () {
         const author = authorInput?.value || '';
         const date = dateInput?.value || '';
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (author) formData.append('author', author);
         if (date) formData.append('date', date);
 
+        // Odoslanie požiadavky na server pre vyhľadanie recenzií
         fetch('?c=review&a=search', {
             method: 'POST',
             body: formData
@@ -20,18 +22,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 const reviewsList = document.getElementById('reviews-list');
                 reviewsList.innerHTML = '';
 
+                // Ak sa nenašli žiadne recenzie
                 if (data.reviews.length === 0) {
                     reviewsList.innerHTML = '<p>Žiadne recenzie neboli nájdené.</p>';
                     return;
                 }
 
+                // Zobrazenie priemerného hodnotenia, ak existuje blok
                 const avgRatingBlock = document.getElementById('avg-rating');
                 if (avgRatingBlock) {
                     avgRatingBlock.innerHTML =
                         `<h3>Priemerné hodnotenie: ${data.avg ?? '0'} ⭐ (${data.total} hlasov)</h3>`;
                 }
 
-                // Завжди показувати кнопку "Pridať recenziu"
+                // Vždy zobrazíme tlačidlo na pridanie recenzie
                 const addBtn = document.createElement('a');
                 addBtn.className = 'create-review';
                 addBtn.textContent = '➕ Pridať recenziu';
@@ -41,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 reviewsList.appendChild(addBtn);
 
+                // Vykreslenie každej recenzie do zoznamu
                 data.reviews.forEach(review => {
                     const item = document.createElement('div');
                     item.className = 'review-item';
@@ -58,16 +63,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     reviewsList.appendChild(item);
                 });
 
-                // Після оновлення — заново повісити обробники видалення
+                // Po načítaní znova naviažeme event listenery na tlačidlá zmazania
                 bindDeleteHandlers();
             })
             .catch(err => console.error('Chyba pri načítaní recenzií:', err));
     };
 
+    // Pri zmene filtra na meno autora spustí nové vyhľadávanie
     authorInput?.addEventListener('input', searchReviews);
+    // Pri zmene dátumu spustí nové vyhľadávanie
     dateInput?.addEventListener('input', searchReviews);
 
-    // Видалення з AJAX і оновлення списку
+    // Funkcia na naviazanie obsluhy mazania po každom novom vykreslení
     function bindDeleteHandlers() {
         document.querySelectorAll('.delete-review').forEach(btn => {
             btn.addEventListener('click', function (e) {
@@ -79,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 if (confirm('Naozaj chcete odstrániť túto recenziu?')) {
+                    // Odoslanie požiadavky na server na zmazanie
                     fetch('?c=review&a=ajaxDelete', {
                         method: 'POST',
                         body: new URLSearchParams({review_id: reviewId})
@@ -88,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             if (data.success) {
                                 const el = document.getElementById('review-' + reviewId);
                                 if (el) el.remove();
-                                searchReviews(); // одразу оновити рейтинг і список
+                                searchReviews(); // Po vymazaní aktualizujeme celý zoznam
                             } else {
                                 alert('❌ Chyba: ' + (data.message || 'Nepodarilo sa odstrániť.'));
                             }
@@ -102,14 +110,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-        document.getElementById('clear-filters').addEventListener('click', function () {
+    // Funkcia pre vyčistenie filtrov
+    document.getElementById('clear-filters').addEventListener('click', function () {
         document.getElementById('search-author').value = '';
         document.getElementById('search-date').value = '';
         if (typeof searchReviews === 'function') {
-        searchReviews(); // викликає оновлення
-    }
+            searchReviews(); // Spustíme nové vyhľadávanie s prázdnymi filtrami
+        }
     });
 
-    // Ініціалізувати для початкових кнопок
+    // Inicializácia pri prvom načítaní — naviazanie delete handlerov
     bindDeleteHandlers();
 });

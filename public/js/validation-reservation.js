@@ -2,17 +2,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form');
     if (!form) return;
 
+    // Načítanie polí formulára
     const dateFromInput = form.querySelector('input[name="date_from"]');
     const dateToInput = form.querySelector('input[name="date_to"]');
     const roomIdInput = form.querySelector('select[name="room_id"], input[name="room_id"]');
-    let unavailableDates = [];
+    let unavailableDates = [];  // Pole obsadených dátumov
 
-    // Flatpickr инициализация
+    // Inicializácia kalendárov pomocou Flatpickr
     const dateFromPicker = flatpickr(dateFromInput, {
         dateFormat: "Y-m-d",
-        disable: [],
+        disable: [],  // Zoznam blokovaných dátumov (nastavujeme neskôr)
         disableMobile: true,
-        onDayCreate: decorateDays
+        onDayCreate: decorateDays  // Funkcia na zvýraznenie blokovaných dní
     });
 
     const dateToPicker = flatpickr(dateToInput, {
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         onDayCreate: decorateDays
     });
 
+    // Funkcia na načítanie obsadených dátumov pre danú izbu
     async function loadUnavailableDates() {
         const roomId = roomIdInput.value;
         if (!roomId) return;
@@ -31,9 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
             unavailableDates = result.unavailable.map(dateStr => dateStr);
 
+            // Nastavenie zakázaných dátumov pre oba kalendáre
             dateFromPicker.set('disable', unavailableDates);
             dateToPicker.set('disable', unavailableDates);
 
+            // Redraw nutný na zobrazenie zvýraznenia
             dateFromPicker.redraw();
             dateToPicker.redraw();
         } catch (err) {
@@ -41,31 +45,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Načítame dátumy pri zmene izby
     roomIdInput.addEventListener('change', loadUnavailableDates);
     loadUnavailableDates();
 
-
+    // Pomocná funkcia na formátovanie dátumu na Y-m-d
     function formatDateToYMD(date) {
         return date.getFullYear() + "-" +
             String(date.getMonth() + 1).padStart(2, '0') + "-" +
             String(date.getDate()).padStart(2, '0');
     }
-    // Подсветка заблокированных дат (кроме disable)
+
+    // Funkcia na zvýraznenie blokovaných dní priamo v kalendári
     function decorateDays(_, __, fp, dayElem) {
         const day = dayElem.dateObj;
-        const dayStr = formatDateToYMD(day);  // <-- вместо toISOString()
+        const dayStr = formatDateToYMD(day);
         if (unavailableDates.includes(dayStr)) {
             dayElem.classList.add("flatpickr-disabled-highlight");
         }
     }
 
-
+    // Hlavná validačná funkcia (volá sa pri odoslaní formulára)
     async function validate() {
         const dateFrom = dateFromInput.value;
         const dateTo = dateToInput.value;
         const roomId = roomIdInput.value;
         const today = new Date().toISOString().split('T')[0];
 
+        // Základné overenie vstupov
         if (!roomId || !dateFrom || !dateTo) {
             return 'Všetky polia musia byť správne vyplnené!';
         }
@@ -76,12 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return 'Dátum do musí byť neskorší ako dátum od!';
         }
 
+        // Overenie, či existuje izba (asynchrónne volanie servera)
         const roomCheck = await fetch(`?c=room&a=checkRoom&id=${roomId}`);
         const roomResult = await roomCheck.json();
         if (!roomResult.exists) {
             return 'Zvolená izba neexistuje!';
         }
 
+        // Overenie dostupnosti dátumov na serveri
         const availability = await fetch(`?c=reservation&a=checkAvailability&room_id=${roomId}&date_from=${dateFrom}&date_to=${dateTo}`);
         const availResult = await availability.json();
         if (!availResult.available) {
@@ -91,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return '';
     }
 
+    // Funkcia na zobrazenie chybového hlásenia
     function showError(message) {
         let errorBox = form.querySelector('.validate-error');
         if (!errorBox) {
@@ -102,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorBox.style.display = message ? 'block' : 'none';
     }
 
+    // Vyčistenie chybového hlásenia
     function clearError() {
         const errorBox = form.querySelector('.validate-error');
         if (errorBox) {
@@ -110,15 +121,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Spracovanie samotného submitu formulára
     form.addEventListener('submit', async function (e) {
-        e.preventDefault();
+        e.preventDefault();  // Zablokujeme štandardné odoslanie
 
-        const error = await validate();
+        const error = await validate();  // Spustíme asynchrónnu validáciu
         if (error) {
-            showError(error);
+            showError(error);  // Ak je chyba, zobrazíme ju
         } else {
             clearError();
-            form.submit();
+            form.submit();  // Ak všetko OK, reálne odošleme formulár
         }
     });
 });

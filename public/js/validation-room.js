@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageInputs = form.querySelectorAll('input[type="file"]');
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
-    // Добавляем превью для картинок
+    // Pridanie ukážok obrázkov
     imageInputs.forEach(input => {
         input.addEventListener('change', () => {
             const file = input.files[0];
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 preview.style.marginTop = '10px';
                 preview.src = URL.createObjectURL(file);
 
-                // удаляем старое превью
+                // odstrániť starý náhľad
                 const oldPreview = input.nextElementSibling;
                 if (oldPreview && oldPreview.tagName === 'IMG') {
                     oldPreview.remove();
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const description = descriptionInput.value.trim();
         const price = parseFloat(priceInput.value);
 
-        // Проверка полей
+        // Kontrola polí
         if (!name) {
             errorMessage = 'Názov izby je povinný.';
         } else if (isNaN(capacity) || capacity <= 0) {
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMessage = 'Cena musí byť kladné číslo.';
         }
 
-        // Проверка формата картинок
+        // Kontrola formátu obrázka
         imageInputs.forEach(input => {
             const file = input.files[0];
             if (file && !allowedTypes.includes(file.type)) {
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Проверка уникальности названия комнаты (AJAX)
+        // Kontrola jedinečnosti názvu miestnosti (AJAX)
         if (!errorMessage && form.dataset.mode !== 'edit') {
             try {
                 const response = await fetch(`?c=room&a=checkName&name=${encodeURIComponent(name)}`);

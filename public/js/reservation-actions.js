@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Funkcia na vykonanie vyhľadávania rezervácií na základe filtrov
     function searchReservations() {
         const room = document.getElementById('search-room').value;
         const dateFrom = document.getElementById('search-date-from').value;
@@ -12,27 +13,31 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('date_to', dateTo);
         formData.append('status', status);
 
+        // Ak je užívateľ admin, pridáva sa aj filter na užívateľa
         if (IS_ADMIN) {
             const user = document.getElementById('search-user').value;
             formData.append('user', user);
         }
 
+        // Odosielanie požiadavky na server na vyhľadanie rezervácií
         fetch('?c=reservation&a=search', { method: 'POST', body: formData })
             .then(res => res.json())
             .then(data => {
                 const tbody = document.getElementById('reservation-table-body');
                 tbody.innerHTML = '';
 
+                // Ak žiadne výsledky, zobrazí sa info o prázdnom zozname
                 if (data.reservations.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="7">Žiadne rezervácie neboli nájdené.</td></tr>';
                     return;
                 }
 
+                // Vykreslenie každej rezervácie do tabuľky
                 data.reservations.forEach(res => {
                     const tr = document.createElement('tr');
                     tr.id = 'reservation-' + res.id;
 
-                    // Добавляем CSS-класс в зависимости от статуса
+                    // Pridanie CSS triedy podľa stavu rezervácie
                     let statusClass = '';
                     if (res.status === 'čaká na schválenie') {
                         statusClass = 'status-pending';
@@ -45,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     let html = '';
 
+                    // Ak je admin, zobrazí sa meno a email zákazníka
                     if (IS_ADMIN) {
                         html += `<td data-label="Meno zákazníka">${res.user_name}</td>`;
                         html += `<td data-label="Email">${res.user_email}</td>`;
@@ -58,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td data-label="Akcie">
                     `;
 
+                    // Ak je rezervácia v stave čaká na schválenie, zobrazia sa akcie
                     if (res.status === 'čaká na schválenie') {
                         if (IS_ADMIN) {
                             html += `<a href="#" class="confirm-reservation" data-id="${res.id}">✅</a>
@@ -74,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // 🔥 делегирование событий
+    // Delegovanie udalostí na potvrdenie alebo zrušenie rezervácie
     document.getElementById('reservation-table-body').addEventListener('click', function (e) {
         if (e.target.classList.contains('confirm-reservation')) {
             e.preventDefault();
@@ -91,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            searchReservations();
+                            searchReservations(); // Po úspešnom potvrdení znova načíta tabuľku
                         } else {
                             alert('Nepodarilo sa potvrdiť rezerváciu. ' +  data.message);
                         }
@@ -117,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            searchReservations();
+                            searchReservations(); // Po úspešnom zrušení znova načíta tabuľku
                         } else {
                             alert('Nepodarilo sa zrušiť rezerváciu.');
                         }
@@ -129,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // фильтры поиска
+    // Nastavenie filtrov vyhľadávania na zmenu
     document.getElementById('search-room').addEventListener('input', searchReservations);
     document.getElementById('search-date-from').addEventListener('input', searchReservations);
     document.getElementById('search-date-to').addEventListener('input', searchReservations);
@@ -139,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('search-user').addEventListener('input', searchReservations);
     }
 
+    // Resetovanie filtrov na pôvodné hodnoty
     document.getElementById('clear-filters').addEventListener('click', () => {
         document.getElementById('search-room').value = '';
         document.getElementById('search-date-from').value = '';
@@ -150,5 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
         searchReservations();
     });
 
+    // Načítanie rezervácií hneď pri načítaní stránky
     searchReservations();
 });

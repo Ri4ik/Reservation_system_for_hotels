@@ -35,7 +35,10 @@
                     <p><strong>Cena:</strong> <?= htmlspecialchars($room['price']) ?> € / noc</p>
                     <?php if ($this->app->getAuth()->isAdmin()): ?>
                         <a href="?c=room&a=edit&id=<?= $room['id'] ?>" class="edit-review">✏️Upraviť</a>
-                        <a href="?c=room&a=delete&id=<?= $room['id'] ?>" class="delete-review">❌Zmazať</a>
+                        <a href="?c=room&a=delete&id=<?= $room['id'] ?>" class="delete-review" onclick="return confirm(
+                            'Naozaj chcete odstrániť túto izbu? Všetky rezervácie, ktoré sú s ňou spojené, budú tiež odstránené.'
+                            )">❌Zmazať</a>
+
                     <?php endif; ?>
                     <?php if (!empty($_SESSION['user'])): ?>
                         <a href="?c=reservation&a=create&room_id=<?= $room['id'] ?>" class="create-review">Rezervovať</a>

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', function (e) {
         const commentInput = form.querySelector('textarea[name="comment"]');
-        const ratingInput = form.querySelector('select[name="rating"]'); // может быть null
+        const ratingInput = form.querySelector('select[name="rating"]'); // môže byť null
 
         const comment = commentInput.value.trim();
         let rating = null;
